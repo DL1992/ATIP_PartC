@@ -7,15 +7,17 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -78,27 +80,40 @@
       </HBox>
    </bottom>
    <right>
-      <GridPane prefHeight="268.0" prefWidth="198.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="97.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="103.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="166.0" minHeight="10.0" prefHeight="166.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="162.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="151.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button contentDisplay="BOTTOM" graphicTextGap="5.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="63.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="65.0" text="&lt;-" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="65.0" text="-&gt;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="63.0" text="V" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
+      <SplitPane dividerPositions="0.6190476190476191" orientation="VERTICAL" prefHeight="275.0" prefWidth="171.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="89.0" prefWidth="158.0">
+               <children>
+                  <VBox layoutX="-1.0" layoutY="-7.0" prefHeight="174.0" prefWidth="171.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="171.0" text="Try Another Maze" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Save Maze" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="192.0" text="Highlight Path" />
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" text="Hint Path" />
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <GridPane prefHeight="103.0" prefWidth="150.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50" />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
+                        <RowConstraints />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="4" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
    </right>
 </BorderPane>
