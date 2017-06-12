@@ -4,6 +4,7 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import javafx.scene.canvas.Canvas;
 
+
 /**
  * Created by user on 11/06/2017.
  */
