@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import View.MazeDisplay?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -17,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewModel.MyViewModel">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -66,13 +68,39 @@
       <Glow />
    </effect>
    <center>
-      <MazeDisplay BorderPane.alignment="CENTER" />
+      <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="HeroBox" onAction="#updateHero" prefWidth="150.0" promptText="Superman">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Batman" />
+                        <String fx:value="Superman" />
+                        <String fx:value="Spiderman" />
+                    </FXCollections>
+                </items>
+             </ComboBox>
+            <ComboBox fx:id="WallBox" onAction="#updateWalls" prefWidth="150.0" promptText="FireWall">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="BrickWall" />
+                        <String fx:value="FireWall" />
+                        <String fx:value="StoneWall" />
+                        <String fx:value="WaterWall" />
+                        <String fx:value="WoodWall" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+             <ComboBox fx:id="GoalBoxGoalBox" onAction="#updateGoal" prefWidth="150.0" promptText="Dude">
+                 <items>
+                     <FXCollections fx:factory="observableArrayList">
+                         <String fx:value="Grandmother" />
+                         <String fx:value="Dude" />
+                     </FXCollections>
+                 </items>
+             </ComboBox>
          </children>
          <padding>
             <Insets left="20.0" />
@@ -86,7 +114,7 @@
                <children>
                   <VBox layoutX="-1.0" layoutY="-7.0" prefHeight="174.0" prefWidth="171.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="171.0" text="Try Another Maze" />
+                        <Button mnemonicParsing="false" onAction="#generateMaze" prefHeight="20.0" prefWidth="171.0" text="Try Another Maze" />
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Save Maze" />
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="192.0" text="Highlight Path" />
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" text="Hint Path" />
@@ -106,10 +134,10 @@
                         <RowConstraints />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="4" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="\\u2191" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="\\u2190" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="\\u2192" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="\\u2193" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children></AnchorPane>

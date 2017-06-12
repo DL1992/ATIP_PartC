@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("MyView.fxml"));
         primaryStage.setTitle("Our AMAZING maze game (firework version patch 1.0.1)");
-        Scene s = new Scene(root, 300, 275, Color.web("CAEBF2"));
+        Scene s = new Scene(root, 850, 750, Color.web("CAEBF2"));
         primaryStage.setScene(s);;
         //starting the server should be here?
 
