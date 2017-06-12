@@ -43,7 +43,9 @@ public class MyViewModel extends Observable implements Observer {
         mazeDisplay.setGoalImageFileName(ThePathToTheGoalImage);
     }
 
+    public void tellUserAboutDevs(){
 
+    }
 
 
     @Override

@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewModel.MyViewModel">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewModel.MyViewModel">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -32,7 +32,12 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" text="Maze Walls" />
+                  <Menu mnemonicParsing="false" text="Maze Walls">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="BrickWall" />
+                      <MenuItem mnemonicParsing="false" text="FireWall" />
+                    </items>
+                  </Menu>
                   <MenuItem mnemonicParsing="false" text="Charecter" />
                   <MenuItem mnemonicParsing="false" text="Background Color" />
               </items>
