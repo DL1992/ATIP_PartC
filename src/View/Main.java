@@ -45,8 +45,8 @@ public class Main extends Application {
         MyView mv = loader.getController();
         mv.setViewModel(vm);
 
-        primaryStage.setTitle("Our AMAZING maze game (firework version patch 1.0.1)");
-        Scene scene = new Scene(root, 850, 750, Color.web("CAEBF2"));
+        primaryStage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
+        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
         scene.getStylesheets().add("./View/Design.css");
         primaryStage.setScene(scene);
         primaryStage.show();
