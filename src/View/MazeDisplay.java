@@ -2,14 +2,19 @@ package View;
 
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.AState;
+import algorithms.search.MazeState;
+import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 /**
@@ -72,6 +77,8 @@ public class MazeDisplay extends Canvas {
         redraw();
     }
 
+
+
     private void redraw(){
         if( null != maze) {
             int[][] mazeData = maze.getData();
@@ -121,7 +128,7 @@ public class MazeDisplay extends Canvas {
                 for(int i=0; i<mazeData.length; i++){
                     for (int j = 0; j < mazeData[0].length; j++) {
                         if(mazeData[i][j] == 1){
-                            gc.drawImage(wallImage, i*cellHeight, j*cellWidth, cellHeight, cellWidth);
+                            gc.drawImage(wallImage, j*cellHeight, i*cellWidth, cellHeight, cellWidth);
                         }
                     }
                 }
@@ -131,5 +138,43 @@ public class MazeDisplay extends Canvas {
     }
 
 
+    public void drawSolution(Solution solution)
+    {
+        int[][] mazeData = maze.getData();
+        double cellHeight = getHeight() / mazeData.length;
+        double cellWidth = getWidth() / mazeData[0].length;
+        redrawWalls(cellHeight , cellWidth);
+        redrawHero(cellHeight , cellWidth);
+        redrawGoal(cellHeight , cellWidth);
+        ArrayList<AState> mazeSolutionPath = solution.getSolutionPath();
+        for (int i = 1; i < mazeSolutionPath.size() - 1; i++) {
+            Position pos = ((MazeState) mazeSolutionPath.get(i)).getPosition();
+            GraphicsContext gc = getGraphicsContext2D();
+            gc.setFill(Color.LIGHTGREEN);
+                gc.fillRect(pos.getColumnIndex()*cellHeight, pos.getRowIndex()*cellWidth, cellHeight, cellWidth);
+        }
+    }
+
+    public void drawHint(Solution solution)
+    {
+        int[][] mazeData = maze.getData();
+        double cellHeight = getHeight() / mazeData.length;
+        double cellWidth = getWidth() / mazeData[0].length;
+        redrawWalls(cellHeight , cellWidth);
+        redrawHero(cellHeight , cellWidth);
+        redrawGoal(cellHeight , cellWidth);
+        ArrayList<AState> mazeSolutionPath = solution.getSolutionPath();
+        if(mazeSolutionPath.size() >= 3 ){
+                    drawSolution(solution);
+        }
+        else{
+            for (int i = 1; i < 3; i++) {
+                Position pos = ((MazeState) mazeSolutionPath.get(i)).getPosition();
+                GraphicsContext gc = getGraphicsContext2D();
+                gc.setFill(Color.LIGHTGREEN);
+                gc.fillRect(pos.getColumnIndex()*cellHeight, pos.getRowIndex()*cellWidth, cellHeight, cellWidth);
+            }
+        }
+    }
 
 }

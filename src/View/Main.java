@@ -1,6 +1,5 @@
 package View;
 
-import Model.IModel;
 import Model.MyModel;
 import ViewModel.MyViewModel;
 import javafx.application.Application;
@@ -9,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class Main extends Application {
 
@@ -18,7 +16,7 @@ public class Main extends Application {
 //        final MyModel m = new MyModel();
 //        m.startServers();
 //        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("MyView.fxml"));
+//        loader.setLocation(getClass().getResource("MyViewController.fxml"));
 //        loader.setControllerFactory(new Callback<Class<?>, Object>() {
 //            @Override
 //            public Object call(Class<?> aClass) {
@@ -42,8 +40,9 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("MyView.fxml").openStream());
-        MyView mv = loader.getController();
+        MyViewController mv = loader.getController();
         mv.setViewModel(vm);
+        vm.addObserver(mv);
 
         primaryStage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
         Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));

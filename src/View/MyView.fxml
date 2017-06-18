@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
    <top>
       <MenuBar focusTraversable="false" BorderPane.alignment="CENTER">
         <menus>
@@ -72,7 +72,7 @@
       <Glow />
    </effect>
    <center>
-      <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" BorderPane.alignment="CENTER">
+      <MazeDisplay onKeyPressed="#KeyPressed" fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin></MazeDisplay>
@@ -130,7 +130,7 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_FHP" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
+                  <Button id="B_FHP" focusTraversable="false" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
@@ -157,10 +157,10 @@
                   <RowConstraints />
               </rowConstraints>
                <children>
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                   <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button onAction="#MoveUp" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Button onAction="#MoveLeft" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button onAction="#MoveDown" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                   <Button onAction="#MoveRight" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <opaqueInsets>
                   <Insets />
