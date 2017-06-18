@@ -55,7 +55,7 @@ public class MazeDisplay extends Canvas {
         if( null != maze) {
             int[][] mazeData = maze.getData();
             double cellHeight = getHeight() / mazeData.length;
-            double cellWidth = getWidth() / mazeData[0].length;
+            double cellWidth = getWidth() / (mazeData[0]).length;
             deleteHero(cellHeight, cellWidth);
             heroPosition = newHeroPosition;
             redrawHero(cellHeight, cellWidth);
@@ -83,7 +83,7 @@ public class MazeDisplay extends Canvas {
         if( null != maze) {
             int[][] mazeData = maze.getData();
             double cellHeight = getHeight() / mazeData.length;
-            double cellWidth = getWidth() / mazeData[0].length;
+            double cellWidth = getWidth() / (mazeData[0]).length;
             redrawWalls(cellHeight , cellWidth);
             redrawHero(cellHeight , cellWidth);
             redrawGoal(cellHeight , cellWidth);
@@ -142,7 +142,7 @@ public class MazeDisplay extends Canvas {
     {
         int[][] mazeData = maze.getData();
         double cellHeight = getHeight() / mazeData.length;
-        double cellWidth = getWidth() / mazeData[0].length;
+        double cellWidth = getWidth() / (mazeData[0]).length;
         redrawWalls(cellHeight , cellWidth);
         redrawHero(cellHeight , cellWidth);
         redrawGoal(cellHeight , cellWidth);
@@ -159,7 +159,7 @@ public class MazeDisplay extends Canvas {
     {
         int[][] mazeData = maze.getData();
         double cellHeight = getHeight() / mazeData.length;
-        double cellWidth = getWidth() / mazeData[0].length;
+        double cellWidth = getWidth() / (mazeData[0]).length;
         redrawWalls(cellHeight , cellWidth);
         redrawHero(cellHeight , cellWidth);
         redrawGoal(cellHeight , cellWidth);

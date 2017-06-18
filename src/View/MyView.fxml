@@ -10,6 +10,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -71,12 +72,6 @@
    <effect>
       <Glow />
    </effect>
-   <center>
-      <MazeDisplay onKeyPressed="#KeyPressed" fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-         </BorderPane.margin></MazeDisplay>
-   </center>
    <bottom>
       <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -157,10 +152,10 @@
                   <RowConstraints />
               </rowConstraints>
                <children>
-                  <Button onAction="#MoveUp" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                  <Button onAction="#MoveLeft" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                  <Button onAction="#MoveDown" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                   <Button onAction="#MoveRight" ellipsisString="" focusTraversable="false" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveUp" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveLeft" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveDown" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                   <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveRight" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -175,4 +170,11 @@
          </opaqueInsets>
       </VBox>
    </right>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <MazeDisplay fx:id="mazeDisplay" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" />
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>

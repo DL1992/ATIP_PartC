@@ -29,7 +29,7 @@ public class MyModel extends Observable implements IModel {
     private boolean isSolutionChanged = false;
     private Server mazeGenerationServer;
     private Server mazeSolvingServer;
-    private ExecutorService threadPool = Executors.newFixedThreadPool(15);
+    //private ExecutorService threadPool;
 
     public Maze getMaze() {
         return gameMaze;
@@ -56,6 +56,7 @@ public class MyModel extends Observable implements IModel {
     }
 
     public void startServers(){
+        //this.threadPool = Executors.newFixedThreadPool(15);
         mazeGenerationServer = new Server(5400, 2000, new ServerStrategyGenerateMaze());
         mazeSolvingServer = new Server(5401, 2000, new ServerStrategySolveSearchProblem());
         mazeGenerationServer.start();
@@ -70,7 +71,7 @@ public class MyModel extends Observable implements IModel {
     //TODO: check weird bug in QA - the maze display update bug
     @Override
     public void Create(int rowSize, int columnSize) {
-        threadPool.execute(() -> {
+        //threadPool.execute(() -> {
             try {
                 new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
                     @Override
@@ -82,13 +83,12 @@ public class MyModel extends Observable implements IModel {
                             int[] mazeDimensions = new int[]{rowSize, columnSize};
                             toServer.writeObject(mazeDimensions);
                             toServer.flush();
-                            byte[] compressedMaze = (byte[]) fromServer.readObject();
+                            byte[] compressedMaze = (byte[])((byte[])fromServer.readObject());
                             InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
                             byte[] decompressedMaze = new byte[compressedMaze.length];
                             is.read(decompressedMaze);
-                            Maze maze = new Maze(decompressedMaze);
-                            gameMaze = maze;
-                            heroPosition = maze.getStartPosition();
+                            gameMaze = new Maze(decompressedMaze);
+                            heroPosition = gameMaze.getStartPosition();
                         } catch (Exception e) {
                         }
                     }
@@ -98,12 +98,12 @@ public class MyModel extends Observable implements IModel {
             }
             setChanged();
             notifyObservers(gameMaze);
-        });
+       // });
     }
 
     @Override
     public void Solve() {
-        threadPool.execute(() -> {
+        //threadPool.execute(() -> {
             try {
                 new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
                     @Override
@@ -125,7 +125,7 @@ public class MyModel extends Observable implements IModel {
             setChanged();
             notifyObservers(mazeSolution);
 
-        });
+       // });
     }
 
     @Override
