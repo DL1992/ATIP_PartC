@@ -1,17 +1,10 @@
 package ViewModel;
 
 import Model.IModel;
-import Model.MyModel;
-import View.MazeDisplay;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
-import javafx.beans.property.ObjectProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -28,7 +21,7 @@ public class MyViewModel extends Observable implements Observer {
     }
 
     public void generateMaze(){
-        observedModel.Create(3,3);
+        observedModel.Create(15,15);
     }
 
     public void solveMaze() {
