@@ -25,7 +25,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem onAction="#createMaze" mnemonicParsing="false" text="New" />
                   <MenuItem onAction="#save" mnemonicParsing="false" text="Save" />
                   <MenuItem onAction="#load" mnemonicParsing="false" text="Load" />
                </items>
@@ -58,21 +58,21 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-              <MenuItem mnemonicParsing="false" text="Properties" />
+              <MenuItem onAction="#showProperties" mnemonicParsing="false" text="Properties" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="Instructions" />
                   <MenuItem mnemonicParsing="false" text="Hint next move" />
-                  <MenuItem mnemonicParsing="false" text="Hint path" />
+                  <MenuItem onAction="#solveMaze" mnemonicParsing="false" text="Hint path" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="About">
               <items>
-                <MenuItem mnemonicParsing="false" text="Us" />
-                  <MenuItem mnemonicParsing="false" text="The Game" />
-                  <MenuItem mnemonicParsing="false" text="Easter Egg Knowledge" />
+                <MenuItem onAction="#tellUserAboutDevs" mnemonicParsing="false" text="Us" />
+                  <MenuItem onAction="#tellUserAboutTheGame" mnemonicParsing="false" text="The Game" />
+                  <MenuItem onAction="#rickrolledUser" mnemonicParsing="false" text="Easter Egg Knowledge" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Exit">

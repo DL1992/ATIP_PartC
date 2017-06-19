@@ -9,30 +9,37 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
 /**
  * Created by sergayen on 6/14/2017.
  */
 public class MyViewController implements Observer, IView {
     MyViewModel vm;
+    public TextField rows = new TextField();
+    public TextField cols = new TextField();
+
 
     @FXML
     public HBox selectionPane;
@@ -42,7 +49,12 @@ public class MyViewController implements Observer, IView {
     public ComboBox WallBox;
     public ComboBox GoalBox;
 
-    public void setViewModel(MyViewModel vm){ this.vm = vm; }
+    public void setViewModel(MyViewModel vm){
+        this.vm = vm;
+        vm.rows.bind(rows.textProperty());
+        vm.cols.bind(cols.textProperty());
+        mazeDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e)-> mazeDisplay.requestFocus());
+    }
 
     public void generateMaze(){ vm.generateMaze(); }
 
@@ -99,7 +111,116 @@ public class MyViewController implements Observer, IView {
 
 
     public void tellUserAboutDevs(){
+        String text = "";
+        try {
+            Scanner scan = new Scanner( new File("./resources/About/AboutUs.txt"));
+            text = scan.useDelimiter("\\A").next();
+            scan.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
+
+        Stage stage = new Stage();
+        stage.setTitle("About us");
+        AnchorPane layout = new AnchorPane();
+        layout.getChildren().add(new Label(text));
+
+        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
+        //let us tell you abit about ourselves :/
+    }
+
+    public void tellUserAboutTheGame(){
+        String text = "";
+        try {
+            Scanner scan = new Scanner( new File("./resources/About/AboutTheGame.txt"));
+            text = scan.useDelimiter("\\A").next();
+            scan.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        Stage stage = new Stage();
+        stage.setTitle("About TheGame");
+        AnchorPane layout = new AnchorPane();
+        layout.getChildren().add(new Label(text));
+
+        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
+        //let us tell you abit about ourselves :/
+    }
+
+    public void rickrolledUser() {
+
+        Stage stage = new Stage();
+        stage.setTitle("<3");
+        WebView webView = new WebView();
+        WebEngine webEngine = webView.getEngine();
+        webEngine.load("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        Scene scene = new Scene(webView);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+
+    }
+
+    public void showProperties(){
+
+        BufferedReader reader = null;
+        String line = "";
+        String text = "";
+        try {
+            reader = new BufferedReader(new FileReader("./resources/ATIP_ASS_1.jar/config.properties"));
+            while ((line = reader.readLine()) != null) {
+                text += line;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        Stage stage = new Stage();
+        stage.setTitle("The Properties");
+        AnchorPane layout = new AnchorPane();
+        layout.getChildren().add(new Label(text));
+
+        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void createMaze(){
+        Stage stage = new Stage();
+        stage.setTitle("About us");
+
+
+        AnchorPane layout = new AnchorPane();
+        VBox vbox = new VBox();
+        Label instructions = new Label("Please Enter");
+        Button play = new Button();
+
+        play.setText("Create");
+        play.setOnAction(event -> {vm.generateMaze(); stage.close();
+        });
+
+        vbox.getChildren().addAll(instructions, rows, cols, play);
+        layout.getChildren().add(vbox);
+
+        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     public void MoveUp(){
@@ -128,22 +249,7 @@ public class MyViewController implements Observer, IView {
 
     @Override
     public void update(Observable o, Object arg) {
-        mazeDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e)-> mazeDisplay.requestFocus());
         if(o == vm) {
-//            switch ((String) arg){
-//                case "Maze":
-//                    mazeDisplay.setMaze( (Maze) arg);
-//                    break;
-//                case "Position":
-//                    mazeDisplay.setHeroPosition((Position) arg);
-//                    break;
-//                case "Solution":
-//                    mazeDisplay.drawSolution( (Solution) arg);
-//                    break;
-//                case "Hint":
-//                    mazeDisplay.drawHint( (Solution) arg);
-//                    break;
-//            }
             if (arg instanceof Maze) {
                 mazeDisplay.setMaze( (Maze) arg);
             }
@@ -153,8 +259,10 @@ public class MyViewController implements Observer, IView {
             if(arg instanceof Solution){
                 mazeDisplay.drawSolution( (Solution) arg);
             }
-            if(arg instanceof  String){
-                showWin();
+            if(arg instanceof String){
+                if( ((String) arg).equals("GameOver")) {
+                    showWin();
+                }
             }
         }
     }
