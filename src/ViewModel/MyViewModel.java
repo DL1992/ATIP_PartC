@@ -28,7 +28,7 @@ public class MyViewModel extends Observable implements Observer {
     }
 
     public void generateMaze(){
-        observedModel.Create(5,10);
+        observedModel.Create(3,3);
     }
 
     public void solveMaze() {

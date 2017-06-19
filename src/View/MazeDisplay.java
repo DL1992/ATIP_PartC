@@ -54,8 +54,8 @@ public class MazeDisplay extends Canvas {
     public void setHeroPosition(Position newHeroPosition){
         if( null != maze) {
             int[][] mazeData = maze.getData();
-            double cellHeight = getHeight() / mazeData.length;
-            double cellWidth = getWidth() / (mazeData[0]).length;
+            double cellWidth = getHeight() / mazeData.length;
+            double cellHeight = getWidth() / (mazeData[0]).length;
             deleteHero(cellHeight, cellWidth);
             heroPosition = newHeroPosition;
             redrawHero(cellHeight, cellWidth);
@@ -82,8 +82,8 @@ public class MazeDisplay extends Canvas {
     private void redraw(){
         if( null != maze) {
             int[][] mazeData = maze.getData();
-            double cellHeight = getHeight() / mazeData.length;
-            double cellWidth = getWidth() / (mazeData[0]).length;
+            double cellWidth = getHeight() / mazeData.length;
+            double cellHeight = getWidth() / (mazeData[0]).length;
             redrawWalls(cellHeight , cellWidth);
             redrawHero(cellHeight , cellWidth);
             redrawGoal(cellHeight , cellWidth);
@@ -141,8 +141,8 @@ public class MazeDisplay extends Canvas {
     public void drawSolution(Solution solution)
     {
         int[][] mazeData = maze.getData();
-        double cellHeight = getHeight() / mazeData.length;
-        double cellWidth = getWidth() / (mazeData[0]).length;
+        double cellWidth = getHeight() / mazeData.length;
+        double cellHeight = getWidth() / (mazeData[0]).length;
         redrawWalls(cellHeight , cellWidth);
         redrawHero(cellHeight , cellWidth);
         redrawGoal(cellHeight , cellWidth);
@@ -158,8 +158,8 @@ public class MazeDisplay extends Canvas {
     public void drawHint(Solution solution)
     {
         int[][] mazeData = maze.getData();
-        double cellHeight = getHeight() / mazeData.length;
-        double cellWidth = getWidth() / (mazeData[0]).length;
+        double cellWidth = getHeight() / mazeData.length;
+        double cellHeight = getWidth() / (mazeData[0]).length;
         redrawWalls(cellHeight , cellWidth);
         redrawHero(cellHeight , cellWidth);
         redrawGoal(cellHeight , cellWidth);
