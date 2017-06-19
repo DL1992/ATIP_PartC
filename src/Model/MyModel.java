@@ -98,7 +98,7 @@ public class MyModel extends Observable implements IModel {
             } catch (Exception e) {
             }
             setChanged();
-            notifyObservers(gameMaze);
+            notifyObservers("Maze");
         });
     }
 
@@ -124,7 +124,7 @@ public class MyModel extends Observable implements IModel {
             } catch (Exception e) {
             }
             setChanged();
-            notifyObservers(mazeSolution);
+            notifyObservers("Solution");
 
         });
     }
@@ -156,7 +156,7 @@ public class MyModel extends Observable implements IModel {
         gameMaze =  new Maze(savedMazeBytes);
         heroPosition = gameMaze.getStartPosition();
         setChanged();
-        notifyObservers(gameMaze);
+        notifyObservers("Maze");
     }
 
     @Override
@@ -189,7 +189,7 @@ public class MyModel extends Observable implements IModel {
         }
         else{
             setChanged();
-            notifyObservers(heroPosition);
+            notifyObservers("HeroPosition");
         }
     }
 
