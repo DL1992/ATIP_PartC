@@ -1,6 +1,7 @@
 package Model;
 
 import Client.Client;
+import IO.MyCompressorOutputStream;
 import IO.MyDecompressorInputStream;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
@@ -129,13 +130,33 @@ public class MyModel extends Observable implements IModel {
     }
 
     @Override
-    public void Save() {
-
+    public void Save(File file) {
+        try {
+            OutputStream out = new MyCompressorOutputStream(new FileOutputStream(file));
+            gameMaze.setStartPosition(heroPosition);
+            out.write(gameMaze.toByteArray());
+            out.flush();
+            out.close();
+        } catch (IOException var10) {
+            var10.printStackTrace();
+        }
     }
 
     @Override
-    public void Load(String path) {
-
+    public void Load(File file) {
+        byte[] savedMazeBytes = new byte[0];
+        try {
+            InputStream in = new MyDecompressorInputStream(new FileInputStream(file));
+            savedMazeBytes = new byte[1000];
+            in.read(savedMazeBytes);
+            in.close();
+        } catch (IOException var9) {
+            var9.printStackTrace();
+        }
+        gameMaze =  new Maze(savedMazeBytes);
+        heroPosition = gameMaze.getStartPosition();
+        setChanged();
+        notifyObservers(gameMaze);
     }
 
     @Override

@@ -6,6 +6,7 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -52,5 +53,13 @@ public class MyViewModel extends Observable implements Observer {
                 notifyObservers(arg);
             }
         }
+    }
+
+    public void saveFile(File file) {
+        observedModel.Save(file);
+    }
+
+    public void loadFile(File file) {
+        observedModel.Load(file);
     }
 }

@@ -4,11 +4,14 @@ import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -58,6 +62,41 @@ public class MyViewController implements Observer, IView {
         String ThePathToTheGoalImage = "./resources/Goal/" +(String) GoalBox.getValue() + ".jpg";
         mazeDisplay.setGoalImageFileName(ThePathToTheGoalImage);
     }
+
+    public void editUpdateHero(ActionEvent evt){
+        HeroBox.setValue( ( (MenuItem)evt.getSource() ).getText());
+    }
+
+    public void editUpdateWalls(ActionEvent evt){
+        WallBox.setValue( ( (MenuItem)evt.getSource() ).getText());
+    }
+
+    public void editUpdateGoal(ActionEvent evt){
+        GoalBox.setValue( ( (MenuItem)evt.getSource() ).getText());
+    }
+
+    public void save(){
+        FileChooser saveFileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TXT files (*.txt))", "*.txt");
+        saveFileChooser.getExtensionFilters().add(extensionFilter);
+        File file = saveFileChooser.showSaveDialog((Stage) mazeDisplay.getScene().getWindow());
+
+        if(file != null){
+            vm.saveFile(file);
+        }
+    }
+
+    public void load(){
+        FileChooser loadFileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TXT files (*.txt))", "*.txt");
+        loadFileChooser.getExtensionFilters().add(extensionFilter);
+        File file = loadFileChooser.showOpenDialog((Stage) mazeDisplay.getScene().getWindow());
+
+        if(file != null){
+            vm.loadFile(file);
+        }
+    }
+
 
     public void tellUserAboutDevs(){
 

@@ -26,20 +26,34 @@
           <Menu mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
+                  <MenuItem onAction="#save" mnemonicParsing="false" text="Save" />
+                  <MenuItem onAction="#load" mnemonicParsing="false" text="Load" />
                </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
+                  <Menu mnemonicParsing="false" text="Character">
+                      <items>
+                          <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Batman" />
+                          <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Superman" />
+                          <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Spiderman" />
+                      </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Maze Walls">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="BrickWall" />
-                      <MenuItem mnemonicParsing="false" text="FireWall" />
+                      <MenuItem onAction="#editUpdateWalls" mnemonicParsing="false" text="BrickWall" />
+                      <MenuItem onAction="#editUpdateWalls" mnemonicParsing="false" text="FireWall" />
+                      <MenuItem onAction="#editUpdateWalls" mnemonicParsing="false" text="StoneWall" />
+                      <MenuItem onAction="#editUpdateWalls" mnemonicParsing="false" text="WaterWall" />
+                      <MenuItem onAction="#editUpdateWalls" mnemonicParsing="false" text="WoodWall" />
                     </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" text="Charecter" />
-                  <MenuItem mnemonicParsing="false" text="Background Color" />
+                  <Menu mnemonicParsing="false" text="Goal">
+                      <items>
+                          <MenuItem onAction="#editUpdateGoal" mnemonicParsing="false" text="Dude" />
+                          <MenuItem onAction="#editUpdateGoal" mnemonicParsing="false" text="Grandmother" />
+                      </items>
+                  </Menu>
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Options">
@@ -121,7 +135,7 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_SM" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Save Maze" textAlignment="CENTER">
+                  <Button id="B_SM" onAction="#save" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Save Maze" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
@@ -129,7 +143,7 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_PHP" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Hint Path" textAlignment="CENTER">
+                  <Button id="B_PHP" focusTraversable="false" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Load Maze" textAlignment="CENTER">
                       <font>
                           <Font name="Segoe UI Semibold" size="14.0" />
                       </font></Button>
