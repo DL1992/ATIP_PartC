@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -29,14 +31,14 @@ public class MyViewController implements Observer, IView {
     MyViewModel vm;
 
     @FXML
+    public HBox selectionPane;
+    public BorderPane borderPane;
     public MazeDisplay mazeDisplay;
     public ComboBox HeroBox;
     public ComboBox WallBox;
     public ComboBox GoalBox;
 
-    public void setViewModel(MyViewModel vm){
-        this.vm = vm;
-    }
+    public void setViewModel(MyViewModel vm){ this.vm = vm; }
 
     public void generateMaze(){ vm.generateMaze(); }
 
@@ -135,5 +137,60 @@ public class MyViewController implements Observer, IView {
         mediaPlayer.play();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void UpdateLayout() {
+        updateBottom();
+        updateComboBoxes();
+        updateMazeDisplay();
+    }
+
+    private void updateMazeDisplay() {
+        mazeDisplay.setHeight(borderPane.getHeight() * 0.7);
+        mazeDisplay.setWidth(borderPane.getWidth() * 0.7);
+        mazeDisplay.redraw();
+    }
+
+    private void updateBottom() {
+        selectionPane.setMinHeight( borderPane.getHeight() * 0.2 );
+        selectionPane.setMaxHeight( borderPane.getHeight() * 0.2 );
+        selectionPane.setPrefHeight( borderPane.getHeight() * 0.2 );
+        selectionPane.setMinWidth( borderPane.getWidth());
+        selectionPane.setMaxWidth( borderPane.getWidth());
+        selectionPane.setPrefWidth( borderPane.getWidth());
+        selectionPane.setSpacing(borderPane.getWidth() * 0.05);
+    }
+
+    private void updateComboBoxes() {
+        updateHeroBox();
+        updateGoalBox();
+        updateWallBox();
+    }
+
+    private void updateHeroBox() {
+        HeroBox.setMinHeight( selectionPane.getHeight() * 0.3 );
+        HeroBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
+        HeroBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
+        HeroBox.setMinWidth( selectionPane.getWidth() * 0.2 );
+        HeroBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
+        HeroBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
+    }
+
+    private void updateGoalBox() {
+        GoalBox.setMinHeight( selectionPane.getHeight() * 0.3 );
+        GoalBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
+        GoalBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
+        GoalBox.setMinWidth( selectionPane.getWidth() * 0.2 );
+        GoalBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
+        GoalBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
+    }
+
+    private void updateWallBox() {
+        WallBox.setMinHeight( selectionPane.getHeight() * 0.3 );
+        WallBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
+        WallBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
+        WallBox.setMinWidth( selectionPane.getWidth() * 0.2 );
+        WallBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
+        WallBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
     }
 }

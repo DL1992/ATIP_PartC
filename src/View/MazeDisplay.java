@@ -79,7 +79,7 @@ public class MazeDisplay extends Canvas {
 
 
 
-    private void redraw(){
+    public void redraw(){
         if( null != maze) {
             int[][] mazeData = maze.getData();
             double cellWidth = getHeight() / mazeData.length;

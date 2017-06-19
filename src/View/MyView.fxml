@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
    <top>
       <MenuBar focusTraversable="false" BorderPane.alignment="CENTER">
         <menus>
@@ -73,7 +73,7 @@
       <Glow />
    </effect>
    <bottom>
-      <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER_LEFT">
+      <HBox fx:id="selectionPane" alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER_LEFT">
          <children>
             <ComboBox fx:id="HeroBox" focusTraversable="false" onAction="#updateHero" prefWidth="150.0" promptText="Superman">
                 <items>
@@ -173,7 +173,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <MazeDisplay fx:id="mazeDisplay" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" />
+            <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
