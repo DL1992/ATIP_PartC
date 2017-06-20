@@ -40,14 +40,9 @@ public class MyViewModel extends Observable implements Observer {
             observedModel.Create(Integer.parseInt(rows.get()),Integer.parseInt(cols.get()));
         }
         else{
-            showAlert("PLEASE ENTER FUCKING NUMBERS AS MAZE SIZES YOU GOD DAMN RETARD");
+            setChanged();
+            notifyObservers("NotInt");
         }
-    }
-
-    private void showAlert(String AFUCKINGMESSEGESTRING) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(AFUCKINGMESSEGESTRING);
-        alert.show();
     }
 
     private boolean tryParseMazeSizes() {
@@ -75,6 +70,10 @@ public class MyViewModel extends Observable implements Observer {
                setChanged();
                notifyObservers(observedModel.getMaze());
                break;
+           case "HeroPosition":
+               setChanged();
+               notifyObservers(observedModel.getCurrentPosition());
+               break;
            case "Solution":
                setChanged();
                notifyObservers(observedModel.getSolution());
@@ -83,9 +82,9 @@ public class MyViewModel extends Observable implements Observer {
                setChanged();
                notifyObservers("GameOver");
                break;
-           case "HeroPosition":
+           case "BadSizes":
                setChanged();
-               notifyObservers(observedModel.getCurrentPosition());
+               notifyObservers("BadSizes");
                break;
        }
     }

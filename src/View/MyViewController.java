@@ -56,6 +56,12 @@ public class MyViewController implements Observer, IView {
         mazeDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e)-> mazeDisplay.requestFocus());
     }
 
+    private void showAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(alertMessage);
+        alert.show();
+    }
+
     public void generateMaze(){ vm.generateMaze(); }
 
     public void solveMaze(){ vm.solveMaze(); }
@@ -262,6 +268,12 @@ public class MyViewController implements Observer, IView {
             if(arg instanceof String){
                 if( ((String) arg).equals("GameOver")) {
                     showWin();
+                }
+                if( ((String) arg).equals("BadSizes")) {
+                    showAlert("Please enter only natural numbers bigger then 1 as maze sizes :/ ");
+                }
+                if( ((String) arg).equals("NotInt")) {
+                    showAlert("Please only numbers as maze sizes :/ ");
                 }
             }
         }
