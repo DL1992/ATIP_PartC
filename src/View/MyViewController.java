@@ -36,7 +36,8 @@ import java.util.Scanner;
  * Created by sergayen on 6/14/2017.
  */
 public class MyViewController implements Observer, IView {
-    MyViewModel vm;
+    private MyViewModel vm;
+    public Scene mainScene;
     public TextField rows = new TextField();
     public TextField cols = new TextField();
 
@@ -48,6 +49,7 @@ public class MyViewController implements Observer, IView {
     public ComboBox HeroBox;
     public ComboBox WallBox;
     public ComboBox GoalBox;
+    public Button backToTheMain;
 
     public void setViewModel(MyViewModel vm){
         this.vm = vm;
@@ -60,9 +62,10 @@ public class MyViewController implements Observer, IView {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(alertMessage);
         alert.show();
+        alert.setOnCloseRequest(event -> createMaze());
     }
 
-    public void generateMaze(){ vm.generateMaze(); }
+    public void generateMaze(){ vm.fromMainToOpen(); }
 
     public void solveMaze(){ vm.solveMaze(); }
 
@@ -208,7 +211,7 @@ public class MyViewController implements Observer, IView {
 
     public void createMaze(){
         Stage stage = new Stage();
-        stage.setTitle("About us");
+        stage.setTitle("Gathering Data.....");
 
 
         AnchorPane layout = new AnchorPane();
@@ -275,26 +278,43 @@ public class MyViewController implements Observer, IView {
                 if( ((String) arg).equals("NotInt")) {
                     showAlert("Please only numbers as maze sizes :/ ");
                 }
+//                if( ((String) arg).equals("Continue")) {
+//                    moveFromVictoryToMain();
+//                }
+                if( ((String) arg).equals("StartGame")) {
+                    startGame();
+                }
+                if( ((String) arg).equals("LoadGame")) {
+                    loadGame();
+                }
+                if( ((String) arg).equals("mainToOpen")) {
+                    mainScene.getWindow().hide();
+                }
             }
         }
     }
 
+    private void loadGame() {
+        Stage stage = new Stage();
+        stage.setScene(mainScene);
+        stage.show();
+        load();
+    }
+
+    private void startGame() {
+        Stage stage = new Stage();
+        stage.setScene(mainScene);
+        stage.show();
+        createMaze();
+    }
+
     private void showWin() {
-        Stage stage = (Stage) mazeDisplay.getScene().getWindow();
-        Parent root = null;
-        FXMLLoader loader = new FXMLLoader();
-        try {
-            root = loader.load(getClass().getResource("MyVictoryView.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
-        scene.getStylesheets().add("./View/Design.css");
-        String musicPath = "./resources/Audio/champions.mp3";
-        Media sound = new Media(new File(musicPath).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-        stage.setScene(scene);
+        mainScene.getWindow().hide();
+    }
+
+    public void moveFromVictoryToMain(){
+        Stage stage = new Stage();
+        stage.setScene(mainScene);
         stage.show();
     }
 

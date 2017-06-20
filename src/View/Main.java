@@ -20,28 +20,56 @@ public class Main extends Application {
         MyViewModel vm = new MyViewModel(m);
         m.addObserver(vm);
 
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("MyView.fxml").openStream());
-        MyViewController mv = loader.getController();
-        mv.setViewModel(vm);
-        vm.addObserver(mv);
+        FXMLLoader viewLoader = new FXMLLoader();
+        FXMLLoader victoryLoader = new FXMLLoader();
+        FXMLLoader openingLoader = new FXMLLoader();
+
+        Parent root = viewLoader.load(getClass().getResource("MyView.fxml").openStream());
+        MyViewController myViewController = viewLoader.getController();
+        myViewController.setViewModel(vm);
+        vm.addObserver(myViewController);
+
+        Parent root2 = victoryLoader.load(getClass().getResource("MyVictoryView.fxml").openStream());
+        MyVictoryViewController myVictoryViewController = victoryLoader.getController();
+        myVictoryViewController.setViewModel(vm);
+        vm.addObserver(myVictoryViewController);
+
+        Parent root3 = openingLoader.load(getClass().getResource("MyOpeningView.fxml").openStream());
+        MyOpeningViewController myOpeningViewController = openingLoader.getController();
+        myOpeningViewController.setViewModel(vm);
+        vm.addObserver(myOpeningViewController);
 
         primaryStage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
-        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
-        scene.getStylesheets().add("./View/Design.css");
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
+
+        Scene gameScene = new Scene(root, 875, 750, Color.web("CAEBF2"));
+        gameScene.getStylesheets().add("./View/Design.css");
+
+        Scene victoryScene = new Scene(root2, 875, 750, Color.web("CAEBF2"));
+        victoryScene.getStylesheets().add("./View/Design.css");
+
+        Scene openingScene = new Scene(root3, 875, 750, Color.web("CAEBF2"));
+        victoryScene.getStylesheets().add("./View/Design.css");
+
+        myViewController.mainScene = gameScene;
+        myVictoryViewController.victoryScene = victoryScene;
+        myOpeningViewController.openingScene = openingScene;
+
+
+        gameScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                mv.UpdateLayout();
+                myViewController.UpdateLayout();
             }
         });
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
+        gameScene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                mv.UpdateLayout();
+                myViewController.UpdateLayout();
             }
         });
-        primaryStage.setScene(scene);
+
+
+        primaryStage.setScene(openingScene);
         primaryStage.show();
-        mv.UpdateLayout();
+        //myViewController.UpdateLayout();
     }
 
 

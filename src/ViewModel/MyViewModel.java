@@ -96,4 +96,24 @@ public class MyViewModel extends Observable implements Observer {
     public void loadFile(File file) {
         observedModel.Load(file);
     }
+
+    public void resumeGame() {
+        setChanged();
+        notifyObservers("Continue");
+    }
+
+    public void startGame() {
+        setChanged();
+        notifyObservers("StartGame");
+    }
+
+    public void loadGame() {
+        setChanged();
+        notifyObservers("LoadGame");
+    }
+
+    public void fromMainToOpen() {
+        setChanged();
+        notifyObservers("mainToOpen");
+    }
 }
