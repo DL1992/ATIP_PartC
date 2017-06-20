@@ -6,8 +6,6 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -19,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -37,6 +34,8 @@ import java.util.Scanner;
  */
 public class MyViewController implements Observer, IView {
     MyViewModel vm;
+
+
     public TextField rows = new TextField();
     public TextField cols = new TextField();
 
@@ -202,7 +201,7 @@ public class MyViewController implements Observer, IView {
 
     public void createMaze(){
         Stage stage = new Stage();
-        stage.setTitle("About us");
+        stage.setTitle("Create Maze");
 
 
         AnchorPane layout = new AnchorPane();
@@ -268,21 +267,19 @@ public class MyViewController implements Observer, IView {
     }
 
     private void showWin() {
-        Stage stage = (Stage) mazeDisplay.getScene().getWindow();
-        Parent root = null;
-        FXMLLoader loader = new FXMLLoader();
-        try {
-            root = loader.load(getClass().getResource("MyVictoryView.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
-        scene.getStylesheets().add("./View/Design.css");
+        Stage stage = new Stage();
+//            FXMLLoader loader = new FXMLLoader();
+//            Parent root = loader.load(getClass().getResource("/View/MyVictoryView.fxml"))/*.openStream())*/;
+//            Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
+//            scene.getStylesheets().add("./View/Design.css");
         String musicPath = "./resources/Audio/champions.mp3";
+
         Media sound = new Media(new File(musicPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
-        stage.setScene(scene);
+
+
+        stage.setScene(vm.scene2);
         stage.show();
     }
 
@@ -339,5 +336,11 @@ public class MyViewController implements Observer, IView {
         WallBox.setMinWidth( selectionPane.getWidth() * 0.2 );
         WallBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
         WallBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
+    }
+
+    public void switchToMain() {
+        Stage stage = new Stage();
+        stage.setScene(vm.scene1);
+        stage.show();
     }
 }

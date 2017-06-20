@@ -27,19 +27,28 @@ public class Main extends Application {
         vm.addObserver(mv);
 
         primaryStage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
-        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
-        scene.getStylesheets().add("./View/Design.css");
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
+        Scene gameScene = new Scene(root, 875, 750, Color.web("CAEBF2"));
+        gameScene.getStylesheets().add("./View/Design.css");
+        gameScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 mv.UpdateLayout();
             }
         });
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
+        gameScene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
                 mv.UpdateLayout();
             }
         });
-        primaryStage.setScene(scene);
+
+        Parent root1 = loader.load(getClass().getResource("/View/MyVictoryView.fxml"));
+        Scene scene2 = new Scene(root1, 875, 750, Color.web("CAEBF2"));
+        scene2.getStylesheets().add("./View/Design.css");
+        vm.scene1=gameScene;
+        vm.scene2=scene2;
+
+
+
+        primaryStage.setScene(gameScene);
         primaryStage.show();
         mv.UpdateLayout();
     }
