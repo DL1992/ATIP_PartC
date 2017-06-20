@@ -1,13 +1,13 @@
 package View;
 
+import Server.properties;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -15,11 +15,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -27,7 +24,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -182,22 +180,12 @@ public class MyViewController implements Observer, IView {
     }
 
     public void showProperties(){
-
-        BufferedReader reader = null;
-        String line = "";
-        String text = "";
-        try {
-            reader = new BufferedReader(new FileReader("./resources/ATIP_ASS_1.jar/config.properties"));
-            while ((line = reader.readLine()) != null) {
-                text += line;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        String text = String.format("Maze creation algorithm: %s \n" +
+                                    "Maze solving algorithm: %s \n" +
+                                    "threadPool size: %s"
+                                    ,properties.getServerMazeGenerateAlgo()
+                                    ,properties.getServerSolveMazeAlgo(),
+                                    properties.getServerThreadPoolCount());
         Stage stage = new Stage();
         stage.setTitle("The Properties");
         AnchorPane layout = new AnchorPane();
@@ -213,23 +201,49 @@ public class MyViewController implements Observer, IView {
         Stage stage = new Stage();
         stage.setTitle("Gathering Data.....");
 
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10,10,10,10));
+        grid.setVgap(8);
+        grid.setHgap(10);
 
-        AnchorPane layout = new AnchorPane();
-        VBox vbox = new VBox();
-        Label instructions = new Label("Please Enter");
-        Button play = new Button();
+        Label instructionLabel = new Label("Please Enter");
+        grid.setConstraints(instructionLabel,0,0);
 
-        play.setText("Create");
+        Label rowLabel = new Label("Number of rows :");
+        grid.setConstraints(rowLabel,0,1);
+        grid.setConstraints(rows,1,1);
+        Label colLabel = new Label("Number of columns :");
+        grid.setConstraints(colLabel,0,2);
+        grid.setConstraints(cols,1,2);
+
+        Button play = new Button("Create");
+        grid.setConstraints(play,1,3);
         play.setOnAction(event -> {vm.generateMaze(); stage.close();
         });
 
-        vbox.getChildren().addAll(instructions, rows, cols, play);
-        layout.getChildren().add(vbox);
-
-        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        grid.getChildren().addAll(rowLabel,rows,colLabel,cols,play,instructionLabel);
+        Scene scene = new Scene(grid, 400, 150);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+
+
+//        AnchorPane layout = new AnchorPane();
+//        VBox vbox = new VBox();
+//        Label instructions = new Label("Please Enter");
+//        Button play = new Button();
+//
+//        play.setText("Create");
+//        play.setOnAction(event -> {vm.generateMaze(); stage.close();
+//        });
+//
+//        vbox.getChildren().addAll(instructions, rows, cols, play);
+//        layout.getChildren().add(vbox);
+//
+//        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+//        stage.setScene(scene);
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.show();
     }
 
     public void MoveUp(){

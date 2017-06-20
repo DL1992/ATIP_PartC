@@ -37,6 +37,7 @@
                           <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Batman" />
                           <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Superman" />
                           <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Spiderman" />
+                          <MenuItem onAction="#editUpdateHero" mnemonicParsing="false" text="Ironman" />
                       </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Maze Walls">
@@ -95,6 +96,7 @@
                         <String fx:value="Batman" />
                         <String fx:value="Superman" />
                         <String fx:value="Spiderman" />
+                        <String fx:value="Ironman" />
                     </FXCollections>
                 </items>
              </ComboBox>
