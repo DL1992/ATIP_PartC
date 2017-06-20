@@ -72,34 +72,40 @@ public class MyModel extends Observable implements IModel {
     //TODO: check weird bug in QA - the maze display update bug
     @Override
     public void Create(int rowSize, int columnSize) {
-        threadPool.execute(() -> {
-            try {
-                new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
-                    @Override
-                    public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
-                        try {
-                            ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
-                            ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
-                            toServer.flush();
-                            int[] mazeDimensions = new int[]{rowSize, columnSize};
-                            toServer.writeObject(mazeDimensions);
-                            toServer.flush();
-                            byte[] compressedMaze = (byte[])((byte[])fromServer.readObject());
-                            InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                            byte[] decompressedMaze = new byte[Math.max(compressedMaze.length,100)];
-                            is.read(decompressedMaze);
-                            gameMaze = new Maze(decompressedMaze);
-                            heroPosition = gameMaze.getStartPosition();
-                        } catch (Exception e) {
-                        }
-                    }
-                }).communicateWithServer();
-
-            } catch (Exception e) {
-            }
+        if(rowSize <= 0 || columnSize <= 0 || rowSize == 1 && columnSize == 1){
             setChanged();
-            notifyObservers("Maze");
-        });
+            notifyObservers("BadSizes");
+        }
+        else {
+            threadPool.execute(() -> {
+                    try {
+                        new Client(InetAddress.getLocalHost(), 5400, new IClientStrategy() {
+                            @Override
+                            public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
+                                try {
+                                    ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
+                                    ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
+                                    toServer.flush();
+                                    int[] mazeDimensions = new int[]{rowSize, columnSize};
+                                    toServer.writeObject(mazeDimensions);
+                                    toServer.flush();
+                                    byte[] compressedMaze = (byte[]) fromServer.readObject();
+                                    InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
+                                    byte[] decompressedMaze = new byte[Math.max(compressedMaze.length, 100)];
+                                    is.read(decompressedMaze);
+                                    gameMaze = new Maze(decompressedMaze);
+                                    heroPosition = gameMaze.getStartPosition();
+                                    toServer.writeObject(mazeDimensions);
+                                } catch (Exception e) {
+                                }
+                            }
+                        }).communicateWithServer();
+                    } catch (Exception e) {
+                    }
+                    setChanged();
+                    notifyObservers("Maze");
+            });
+        }
     }
 
     @Override
@@ -150,8 +156,8 @@ public class MyModel extends Observable implements IModel {
             savedMazeBytes = new byte[1000];
             in.read(savedMazeBytes);
             in.close();
-        } catch (IOException var9) {
-            var9.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         gameMaze =  new Maze(savedMazeBytes);
         heroPosition = gameMaze.getStartPosition();
@@ -193,7 +199,6 @@ public class MyModel extends Observable implements IModel {
         }
     }
 
-
     private boolean checkMove(int newRowIndex, int newColumnIndex) {
         if (gameMaze.checkIndexes(newRowIndex, newColumnIndex)) {
             int[][] mazeData = gameMaze.getData();
@@ -203,4 +208,5 @@ public class MyModel extends Observable implements IModel {
         }
         return false;
     }
+
 }

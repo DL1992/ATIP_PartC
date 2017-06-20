@@ -1,11 +1,20 @@
 package ViewModel;
 
 import Model.IModel;
+import Model.MyModel;
+import View.MazeDisplay;
+import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.util.Observable;
@@ -16,8 +25,7 @@ public class MyViewModel extends Observable implements Observer {
     private IModel observedModel;
     public StringProperty rows;
     public StringProperty cols;
-    public Scene scene1;
-    public Scene scene2;
+
 
     public MyViewModel() {}
 
@@ -32,14 +40,9 @@ public class MyViewModel extends Observable implements Observer {
             observedModel.Create(Integer.parseInt(rows.get()),Integer.parseInt(cols.get()));
         }
         else{
-            showAlert("PLEASE ENTER FUCKING NUMBERS AS MAZE SIZES YOU GOD DAMN RETARD");
+            setChanged();
+            notifyObservers("NotInt");
         }
-    }
-
-    private void showAlert(String AFUCKINGMESSEGESTRING) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(AFUCKINGMESSEGESTRING);
-        alert.show();
     }
 
     private boolean tryParseMazeSizes() {
@@ -67,6 +70,10 @@ public class MyViewModel extends Observable implements Observer {
                setChanged();
                notifyObservers(observedModel.getMaze());
                break;
+           case "HeroPosition":
+               setChanged();
+               notifyObservers(observedModel.getCurrentPosition());
+               break;
            case "Solution":
                setChanged();
                notifyObservers(observedModel.getSolution());
@@ -75,9 +82,9 @@ public class MyViewModel extends Observable implements Observer {
                setChanged();
                notifyObservers("GameOver");
                break;
-           case "HeroPosition":
+           case "BadSizes":
                setChanged();
-               notifyObservers(observedModel.getCurrentPosition());
+               notifyObservers("BadSizes");
                break;
        }
     }
@@ -90,11 +97,23 @@ public class MyViewModel extends Observable implements Observer {
         observedModel.Load(file);
     }
 
-    public void showWin() {
-
+    public void resumeGame() {
+        setChanged();
+        notifyObservers("Continue");
     }
 
-    public void swichToMain() {
+    public void startGame() {
+        setChanged();
+        notifyObservers("StartGame");
+    }
 
+    public void loadGame() {
+        setChanged();
+        notifyObservers("LoadGame");
+    }
+
+    public void fromMainToOpen() {
+        setChanged();
+        notifyObservers("mainToOpen");
     }
 }
