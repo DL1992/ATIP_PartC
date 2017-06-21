@@ -17,6 +17,7 @@ public interface IModel {
     void Save(File file);
     void Load(File file);
     void moveCharacter(KeyCode moveCode);
+    void closeProgram();
 
     Maze getMaze();
     Position getCurrentPosition();

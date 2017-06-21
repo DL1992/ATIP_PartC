@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.util.Observable;
@@ -25,7 +27,7 @@ public class MyViewModel extends Observable implements Observer {
     private IModel observedModel;
     public StringProperty rows;
     public StringProperty cols;
-
+    public MediaPlayer mediaPlayer;
 
     public MyViewModel() {}
 
@@ -86,6 +88,10 @@ public class MyViewModel extends Observable implements Observer {
                setChanged();
                notifyObservers("BadSizes");
                break;
+           case "ShutDown":
+               setChanged();
+               notifyObservers("ShutDown");
+               break;
        }
     }
 
@@ -115,5 +121,24 @@ public class MyViewModel extends Observable implements Observer {
     public void fromMainToOpen() {
         setChanged();
         notifyObservers("mainToOpen");
+    }
+
+    public void closeProgram() {
+        observedModel.closeProgram();
+    }
+
+    public void playMusic(String musicPath){
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+        }
+        Media sound = new Media(new File(musicPath).toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        mediaPlayer.setCycleCount(mediaPlayer.INDEFINITE);
+
+    }
+
+    public boolean isThereMaze() {
+        return (observedModel.getMaze() != null);
     }
 }

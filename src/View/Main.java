@@ -48,7 +48,7 @@ public class Main extends Application {
         victoryScene.getStylesheets().add("./View/Design.css");
 
         Scene openingScene = new Scene(root3, 875, 750, Color.web("CAEBF2"));
-        victoryScene.getStylesheets().add("./View/Design.css");
+        openingScene.getStylesheets().add("./View/Design.css");
 
         myViewController.mainScene = gameScene;
         myVictoryViewController.victoryScene = victoryScene;
@@ -66,7 +66,9 @@ public class Main extends Application {
             }
         });
 
-
+        vm.playMusic("./resources/Audio/Superman.mp3");
+//        vm.mediaPlayer.setVolume(50);
+        myViewController.setVolume(50);
         primaryStage.setScene(openingScene);
         primaryStage.show();
         //myViewController.UpdateLayout();

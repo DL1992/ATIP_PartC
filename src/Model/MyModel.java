@@ -143,8 +143,8 @@ public class MyModel extends Observable implements IModel {
             out.write(gameMaze.toByteArray());
             out.flush();
             out.close();
-        } catch (IOException var10) {
-            var10.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -197,6 +197,14 @@ public class MyModel extends Observable implements IModel {
             setChanged();
             notifyObservers("HeroPosition");
         }
+    }
+
+    @Override
+    public void closeProgram() {
+        stopServers();
+        threadPool.shutdown();
+        setChanged();
+        notifyObservers("ShutDown");
     }
 
     private boolean checkMove(int newRowIndex, int newColumnIndex) {

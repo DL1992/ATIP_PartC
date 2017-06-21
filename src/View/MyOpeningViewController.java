@@ -34,7 +34,12 @@ public class MyOpeningViewController implements IView, Observer {
                     showOpeningView();
                 }
                 if (((String) arg).equals("StartGame") || ((String) arg).equals("LoadGame")) {
-                    openingScene.getWindow().hide();
+                    ((Stage) openingScene.getWindow()).close();
+                }
+                if( ((String) arg).equals("ShutDown")) {
+                    if((Stage) openingScene.getWindow() != null){
+                        ((Stage) openingScene.getWindow()).close();
+                    }
                 }
             }
         }
@@ -50,10 +55,8 @@ public class MyOpeningViewController implements IView, Observer {
 
     private void showOpeningView() {
         Stage stage = new Stage();
-//        String musicPath = "./resources/Audio/champions.mp3";
-//        Media sound = new Media(new File(musicPath).toURI().toString());
-//        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//        mediaPlayer.play();
+        vm.playMusic("./resources/Audio/Superman.mp3");
+        stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(openingScene);
         stage.show();
     }

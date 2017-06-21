@@ -41,6 +41,11 @@ public class MyVictoryViewController implements Observer, IView{
                 if (((String) arg).equals("Continue")) {
                     moveOn();
                 }
+                if( ((String) arg).equals("ShutDown")) {
+                    if((Stage) victoryScene.getWindow() != null){
+                        ((Stage) victoryScene.getWindow()).close();
+                    }
+                }
             }
         }
     }
@@ -50,15 +55,15 @@ public class MyVictoryViewController implements Observer, IView{
     }
 
     private void moveOn() {
-        victoryScene.getWindow().hide();
+        ((Stage) victoryScene.getWindow()).close();
     }
 
     private void weWon() {
         Stage stage = new Stage();
-        String musicPath = "./resources/Audio/champions.mp3";
-        Media sound = new Media(new File(musicPath).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+        stage.setOnCloseRequest(event -> vm.closeProgram());
+
+        vm.playMusic("./resources/Audio/champions.mp3");
+
         stage.setScene(victoryScene);
         stage.show();
     }

@@ -48,6 +48,7 @@ public class MyViewController implements Observer, IView {
     public ComboBox WallBox;
     public ComboBox GoalBox;
     public Button backToTheMain;
+    public Slider slide;
 
     public void setViewModel(MyViewModel vm){
         this.vm = vm;
@@ -69,6 +70,8 @@ public class MyViewController implements Observer, IView {
 
     public void updateHero(){
         String ThePathToTheHeroImage = "./resources/character/" +(String) HeroBox.getValue() + ".jpg";
+        vm.playMusic("./resources/Audio/" + (String) HeroBox.getValue() + ".mp3");
+        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
         mazeDisplay.setHeroImageFileName(ThePathToTheHeroImage);
     }
 
@@ -197,8 +200,21 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
+
+
     public void createMaze(){
         Stage stage = new Stage();
+        stage.setOnCloseRequest(event -> {
+
+            if(!vm.isThereMaze()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("if you click play you MUST create a maze");
+                alert.show();
+                alert.setOnCloseRequest(event2 -> vm.fromMainToOpen());
+
+            }
+        }
+        );
         stage.setTitle("Gathering Data.....");
 
         GridPane grid = new GridPane();
@@ -302,7 +318,12 @@ public class MyViewController implements Observer, IView {
                     loadGame();
                 }
                 if( ((String) arg).equals("mainToOpen")) {
-                    mainScene.getWindow().hide();
+                    ((Stage) mainScene.getWindow()).close();
+                }
+                if( ((String) arg).equals("ShutDown")) {
+                    if((Stage) mainScene.getWindow() != null){
+                        ((Stage) mainScene.getWindow()).close();
+                    }
                 }
             }
         }
@@ -310,6 +331,7 @@ public class MyViewController implements Observer, IView {
 
     private void loadGame() {
         Stage stage = new Stage();
+        stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
         stage.show();
         load();
@@ -317,19 +339,18 @@ public class MyViewController implements Observer, IView {
 
     private void startGame() {
         Stage stage = new Stage();
+        stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
         stage.show();
         createMaze();
     }
 
-    private void showWin() {
-        mainScene.getWindow().hide();
+    public void closeProgram(){
+        vm.closeProgram();
     }
 
-    public void moveFromVictoryToMain(){
-        Stage stage = new Stage();
-        stage.setScene(mainScene);
-        stage.show();
+    private void showWin() {
+        ((Stage) mainScene.getWindow()).close();
     }
 
     public void UpdateLayout() {
@@ -385,5 +406,10 @@ public class MyViewController implements Observer, IView {
         WallBox.setMinWidth( selectionPane.getWidth() * 0.2 );
         WallBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
         WallBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
+    }
+
+    public void setVolume(int value){
+        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
+        slide.setValue(value);
     }
 }
