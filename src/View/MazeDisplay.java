@@ -177,4 +177,8 @@ public class MazeDisplay extends Canvas {
         }
     }
 
+    public void clear() {
+        GraphicsContext gc = getGraphicsContext2D();
+        gc.clearRect(0,0, getWidth() , getHeight());
+    }
 }

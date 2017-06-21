@@ -242,24 +242,6 @@ public class MyViewController implements Observer, IView {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-
-
-//        AnchorPane layout = new AnchorPane();
-//        VBox vbox = new VBox();
-//        Label instructions = new Label("Please Enter");
-//        Button play = new Button();
-//
-//        play.setText("Create");
-//        play.setOnAction(event -> {vm.generateMaze(); stage.close();
-//        });
-//
-//        vbox.getChildren().addAll(instructions, rows, cols, play);
-//        layout.getChildren().add(vbox);
-//
-//        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
-//        stage.setScene(scene);
-//        stage.initModality(Modality.APPLICATION_MODAL);
-//        stage.show();
     }
 
     public void MoveUp(){
@@ -308,9 +290,6 @@ public class MyViewController implements Observer, IView {
                 if( ((String) arg).equals("NotInt")) {
                     showAlert("Please only numbers as maze sizes :/ ");
                 }
-//                if( ((String) arg).equals("Continue")) {
-//                    moveFromVictoryToMain();
-//                }
                 if( ((String) arg).equals("StartGame")) {
                     startGame();
                 }
@@ -333,6 +312,7 @@ public class MyViewController implements Observer, IView {
         Stage stage = new Stage();
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
+        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
         stage.show();
         load();
     }
@@ -341,6 +321,7 @@ public class MyViewController implements Observer, IView {
         Stage stage = new Stage();
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
+        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
         stage.show();
         createMaze();
     }
@@ -350,6 +331,7 @@ public class MyViewController implements Observer, IView {
     }
 
     private void showWin() {
+        mazeDisplay.clear();
         ((Stage) mainScene.getWindow()).close();
     }
 
@@ -412,4 +394,11 @@ public class MyViewController implements Observer, IView {
         vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
         slide.setValue(value);
     }
+
+    public void zoomIn(){
+        mazeDisplay.setScaleX(mazeDisplay.getScaleX()*2);
+        mazeDisplay.setScaleY(mazeDisplay.getScaleY()*2);
+        mazeDisplay.setScaleZ(mazeDisplay.getScaleZ()*2);
+    }
+
 }

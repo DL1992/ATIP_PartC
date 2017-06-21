@@ -81,6 +81,7 @@ public class MyViewModel extends Observable implements Observer {
                notifyObservers(observedModel.getSolution());
                break;
            case "GameOver":
+               observedModel.reset();
                setChanged();
                notifyObservers("GameOver");
                break;

@@ -143,14 +143,14 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_FHP" focusTraversable="false" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="14.0" />
-                     </font></Button>
                   <Button id="B_PHP" focusTraversable="false" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Load Maze" textAlignment="CENTER">
                       <font>
                           <Font name="Segoe UI Semibold" size="14.0" />
                       </font></Button>
+                  <Button id="B_FHP" focusTraversable="false" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="14.0" />
+                     </font></Button>
                </children>
                <opaqueInsets>
                   <Insets top="50.0" />
@@ -207,7 +207,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" onScroll="#zoomIn" onZoom="#zoomIn" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>

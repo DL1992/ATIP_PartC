@@ -66,6 +66,8 @@ public class Main extends Application {
             }
         });
 
+
+
         vm.playMusic("./resources/Audio/Superman.mp3");
 //        vm.mediaPlayer.setVolume(50);
         myViewController.setVolume(50);

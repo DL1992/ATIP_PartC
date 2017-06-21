@@ -25,9 +25,6 @@ public class MyModel extends Observable implements IModel {
     private Maze gameMaze;
     private Position heroPosition;
     private Solution mazeSolution;
-    private boolean isMazeChanged = false;
-    private boolean isHeroPositionChanged = false;
-    private boolean isSolutionChanged = false;
     private Server mazeGenerationServer;
     private Server mazeSolvingServer;
     private ExecutorService threadPool;
@@ -35,25 +32,11 @@ public class MyModel extends Observable implements IModel {
     public Maze getMaze() {
         return gameMaze;
     }
-
     public Position getCurrentPosition() {
         return heroPosition;
     }
-
     public Solution getSolution() {
         return mazeSolution;
-    }
-
-    public void setGameMaze(Maze gameMaze) {
-        this.gameMaze = gameMaze;
-    }
-
-    public void setHeroPosition(Position heroPosition) {
-        this.heroPosition = heroPosition;
-    }
-
-    public void setMazeSolution(Solution mazeSolution) {
-        this.mazeSolution = mazeSolution;
     }
 
     public void startServers(){
@@ -207,6 +190,13 @@ public class MyModel extends Observable implements IModel {
         notifyObservers("ShutDown");
     }
 
+    @Override
+    public void reset() {
+        gameMaze = null;
+        heroPosition = null;
+        mazeSolution = null;
+    }
+
     private boolean checkMove(int newRowIndex, int newColumnIndex) {
         if (gameMaze.checkIndexes(newRowIndex, newColumnIndex)) {
             int[][] mazeData = gameMaze.getData();
@@ -216,5 +206,6 @@ public class MyModel extends Observable implements IModel {
         }
         return false;
     }
+
 
 }
