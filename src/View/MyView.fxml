@@ -23,7 +23,7 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
    <top>
-      <MenuBar focusTraversable="false" BorderPane.alignment="CENTER">
+      <MenuBar fx:id="menuBar" focusTraversable="false" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
                <items>
@@ -90,7 +90,7 @@
       <Glow />
    </effect>
    <bottom>
-      <HBox fx:id="selectionPane" alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER_LEFT">
+      <HBox fx:id="SelectionHBox" alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER_LEFT">
          <children>
             <ComboBox fx:id="HeroBox" focusTraversable="false" onAction="#updateHero" prefWidth="150.0" promptText="Superman">
                 <items>
@@ -131,23 +131,23 @@
       </HBox>
    </bottom>
    <right>
-      <VBox prefHeight="300.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="rightSideMainVBox" alignment="TOP_RIGHT" prefHeight="300.0" prefWidth="225.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="300.0" prefWidth="225.0" spacing="10.0">
+            <VBox fx:id="rightSideButtonsVBox" alignment="TOP_RIGHT" prefHeight="300.0" prefWidth="225.0" spacing="10.0">
                <children>
-                  <Button id="B_TAM" focusTraversable="false" mnemonicParsing="false" onAction="#generateMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Try Another Maze" textAlignment="CENTER">
+                  <Button id="B_TAM" fx:id="backToOpeningButton" focusTraversable="false" mnemonicParsing="false" onAction="#backToOpening" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Try Another Maze" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_SM" focusTraversable="false" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Save Maze" textAlignment="CENTER">
+                  <Button id="B_SM" fx:id="saveMazeButton" focusTraversable="false" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Save Maze" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
-                  <Button id="B_PHP" focusTraversable="false" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Load Maze" textAlignment="CENTER">
+                  <Button id="B_PHP" fx:id="loadMazeButton" focusTraversable="false" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Load Maze" textAlignment="CENTER">
                       <font>
                           <Font name="Segoe UI Semibold" size="14.0" />
                       </font></Button>
-                  <Button id="B_FHP" focusTraversable="false" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
+                  <Button id="B_FHP" fx:id="solveMazeButton" focusTraversable="false" mnemonicParsing="false" onAction="#solveMaze" prefHeight="25.0" prefWidth="225.0" styleClass="button2" text="Highlight Path" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font></Button>
@@ -156,40 +156,34 @@
                   <Insets top="50.0" />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets right="15.0" top="40.0" />
+                  <Insets right="10.0" />
                </VBox.margin>
             </VBox>
-            <GridPane prefHeight="100.0" prefWidth="225.0" styleClass="bg">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-                  <ColumnConstraints maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" />
-                  <RowConstraints />
-              </rowConstraints>
+            <GridPane fx:id="movementGridPane" alignment="CENTER_RIGHT" styleClass="bg">
                <children>
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveUp" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveLeft" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                  <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveDown" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                   <Button ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveRight" prefHeight="50.0" prefWidth="75.0" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="upButton" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveUp" styleClass="button2" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Button fx:id="leftButton" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveLeft" styleClass="button2" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button fx:id="downButton" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveDown"  styleClass="button2" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                   <Button fx:id="rightButton" ellipsisString="" focusTraversable="false" mnemonicParsing="false" onAction="#MoveRight" styleClass="button2" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets right="15.0" />
+                  <Insets right="10.0" />
                </VBox.margin>
+               <padding>
+                  <Insets top="30.0" />
+               </padding>
             </GridPane>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="volumeHBox" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Volume: ">
+                  <Label fx:id="volumeLabel" text="Volume: ">
                      <HBox.margin>
                         <Insets top="60.0" />
                      </HBox.margin>
                   </Label>
-                  <Slider fx:id="slide">
+                  <Slider fx:id="volumeSlider">
                      <padding>
                         <Insets left="15.0" top="60.0" />
                      </padding></Slider>
@@ -197,18 +191,30 @@
                <opaqueInsets>
                   <Insets top="30.0" />
                </opaqueInsets>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
             </HBox>
          </children>
          <opaqueInsets>
-            <Insets bottom="500.0" />
+            <Insets top="10.0" />
          </opaqueInsets>
+         <padding>
+            <Insets right="5.0" top="10.0" />
+         </padding>
       </VBox>
    </right>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="MazeAnchor" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" onScroll="#zoomIn" onZoom="#zoomIn" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.jpg" height="600.0" heroImageFileName="./resources/character/Superman.jpg" onKeyPressed="#KeyPressed" wallImageFileName="./resources/Walls/FireWall.jpg" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
+         <opaqueInsets>
+            <Insets left="10.0" top="10.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets left="10.0" top="10.0" />
+         </padding>
       </AnchorPane>
    </center>
 </BorderPane>

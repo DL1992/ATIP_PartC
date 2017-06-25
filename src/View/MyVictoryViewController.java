@@ -1,10 +1,14 @@
 package View;
 
 import ViewModel.MyViewModel;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -22,13 +26,28 @@ public class MyVictoryViewController implements Observer, IView{
     private MyViewModel vm;
     public Scene victoryScene;
 
+    @FXML
+    public BorderPane mainBorderPane;
+    public AnchorPane pictureAnchorPane;
+    public HBox mainHBox;
+    public Button backToTheMain;
+
     public void setViewModel(MyViewModel vm){
         this.vm = vm;
     }
 
     @Override
     public void UpdateLayout() {
-
+        bindStuff();
+        Image image = new Image("BackGround/deadpool.jpg");
+        //Image image2 = new Image(getClass().getResource("deadpool.jpg"));
+//        pictureAnchorPane.setStyle("-fx-background-image: url('" + image2 + "'); " +
+//                "-fx-background-position: center center; " +
+//                "-fx-background-repeat: stretch;");
+        BackgroundSize backgroundSize = new BackgroundSize(pictureAnchorPane.getWidth(), pictureAnchorPane.getHeight(), false, false, false, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        pictureAnchorPane.setBackground(background);
     }
 
     @Override
@@ -61,10 +80,23 @@ public class MyVictoryViewController implements Observer, IView{
     private void weWon() {
         Stage stage = new Stage();
         stage.setOnCloseRequest(event -> vm.closeProgram());
-
         vm.playMusic("./resources/Audio/champions.mp3");
-
         stage.setScene(victoryScene);
+        bindStuff();
         stage.show();
+    }
+
+    /**
+     * binds all of the controllers to the "right" size
+     */
+    private void bindStuff() {
+        mainBorderPane.prefHeightProperty().bind(victoryScene.heightProperty());
+        mainBorderPane.prefWidthProperty().bind(victoryScene.widthProperty());
+        pictureAnchorPane.prefHeightProperty().bind(mainBorderPane.prefHeightProperty().multiply(0.8));
+        pictureAnchorPane.prefWidthProperty().bind(mainBorderPane.prefWidthProperty().multiply(1));
+        mainHBox.prefHeightProperty().bind(mainBorderPane.prefHeightProperty().multiply(0.15));
+        mainHBox.prefWidthProperty().bind(mainBorderPane.prefWidthProperty().multiply(1));
+        backToTheMain.prefHeightProperty().bind(mainHBox.prefHeightProperty().multiply(0.5));
+        backToTheMain.prefWidthProperty().bind(mainHBox.prefWidthProperty().multiply(0.3));
     }
 }
