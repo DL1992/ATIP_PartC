@@ -57,8 +57,7 @@
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem onAction="#showInstructions" mnemonicParsing="false" text="Instructions"/>
-                        <MenuItem mnemonicParsing="false" text="Hint next move"/>
-                        <MenuItem mnemonicParsing="false" onAction="#solveMaze" text="Hint path"/>
+                        <MenuItem mnemonicParsing="false" onAction="#solveMaze" text="Highlight path"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="About">
@@ -225,7 +224,7 @@
     <center>
         <AnchorPane fx:id="MazeAnchor" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Grandmother.png" height="600.0"
+                <MazeDisplay fx:id="mazeDisplay" goalImageFileName="./resources/Goal/Dude.png" height="600.0"
                              heroImageFileName="./resources/character/Superman.png" onKeyPressed="#KeyPressed"
                              wallImageFileName="./resources/Walls/FireWall.png"
                              width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"

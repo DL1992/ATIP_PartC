@@ -32,10 +32,6 @@ public class MyVictoryViewController implements Observer, IView {
     public void UpdateLayout() {
         bindStuff();
         Image image = new Image("BackGround/deadpool.jpg");
-        //Image image2 = new Image(getClass().getResource("deadpool.jpg"));
-//        pictureAnchorPane.setStyle("-fx-background-image: url('" + image2 + "'); " +
-//                "-fx-background-position: center center; " +
-//                "-fx-background-repeat: stretch;");
         BackgroundSize backgroundSize = new BackgroundSize(pictureAnchorPane.getWidth(), pictureAnchorPane.getHeight(), false, false, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);

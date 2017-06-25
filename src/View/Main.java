@@ -97,6 +97,7 @@ public class Main extends Application {
         primaryStage.setScene(openingScene);
         myOpeningViewController.bindStuff();
         myOpeningViewController.UpdateLayout();
+        primaryStage.setOnCloseRequest(event -> vm.closeProgram());
         primaryStage.show();
         myOpeningViewController.UpdateLayout();
     }
