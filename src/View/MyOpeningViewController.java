@@ -2,11 +2,8 @@ package View;
 
 import ViewModel.MyViewModel;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -55,6 +52,7 @@ public class MyOpeningViewController implements IView, Observer {
 
     private void showOpeningView() {
         Stage stage = new Stage();
+        stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
         vm.playMusic("./resources/Audio/Superman.mp3");
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(openingScene);

@@ -1,17 +1,9 @@
 package View;
 
 import ViewModel.MyViewModel;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -60,6 +52,7 @@ public class MyVictoryViewController implements Observer, IView{
 
     private void weWon() {
         Stage stage = new Stage();
+        stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
         stage.setOnCloseRequest(event -> vm.closeProgram());
 
         vm.playMusic("./resources/Audio/champions.mp3");

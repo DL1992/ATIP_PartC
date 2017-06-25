@@ -143,9 +143,9 @@ public class MazeDisplay extends Canvas {
         int[][] mazeData = maze.getData();
         double cellWidth = getHeight() / mazeData.length;
         double cellHeight = getWidth() / (mazeData[0]).length;
-        redrawWalls(cellHeight , cellWidth);
+//        redrawWalls(cellHeight , cellWidth);
         redrawHero(cellHeight , cellWidth);
-        redrawGoal(cellHeight , cellWidth);
+//        redrawGoal(cellHeight , cellWidth);
         ArrayList<AState> mazeSolutionPath = solution.getSolutionPath();
         for (int i = 1; i < mazeSolutionPath.size() - 1; i++) {
             Position pos = ((MazeState) mazeSolutionPath.get(i)).getPosition();

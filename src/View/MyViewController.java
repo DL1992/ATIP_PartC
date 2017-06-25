@@ -69,19 +69,25 @@ public class MyViewController implements Observer, IView {
     public void solveMaze(){ vm.solveMaze(); }
 
     public void updateHero(){
-        String ThePathToTheHeroImage = "./resources/character/" +(String) HeroBox.getValue() + ".jpg";
+        String ThePathToTheHeroImage = "./resources/character/" +(String) HeroBox.getValue() + ".png";
         vm.playMusic("./resources/Audio/" + (String) HeroBox.getValue() + ".mp3");
         vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
         mazeDisplay.setHeroImageFileName(ThePathToTheHeroImage);
     }
 
     public void updateWalls(){
-        String ThePathToTheWallImage = "./resources/Walls/" +(String) WallBox.getValue() + ".jpg";
+        String ThePathToTheWallImage;
+        if(WallBox.getValue().equals("FireWall")){
+            ThePathToTheWallImage = "./resources/Walls/" +(String) WallBox.getValue() + ".png";
+        }
+        else{
+             ThePathToTheWallImage = "./resources/Walls/" +(String) WallBox.getValue() + ".jpg";
+        }
         mazeDisplay.setWallImageFileName(ThePathToTheWallImage);
     }
 
     public void updateGoal(){
-        String ThePathToTheGoalImage = "./resources/Goal/" +(String) GoalBox.getValue() + ".jpg";
+        String ThePathToTheGoalImage = "./resources/Goal/" +(String) GoalBox.getValue() + ".png";
         mazeDisplay.setGoalImageFileName(ThePathToTheGoalImage);
     }
 
@@ -136,12 +142,32 @@ public class MyViewController implements Observer, IView {
         AnchorPane layout = new AnchorPane();
         layout.getChildren().add(new Label(text));
 
-        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        Scene scene = new Scene(layout, 500, 400, Paint.valueOf("Red"));
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
 
-        //let us tell you abit about ourselves :/
+    public void showInstructions(){
+        String text = "";
+        try {
+            Scanner scan = new Scanner( new File("./resources/About/Instructions.txt"));
+            text = scan.useDelimiter("\\A").next();
+            scan.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        Stage stage = new Stage();
+        stage.setTitle("Instructions");
+        AnchorPane layout = new AnchorPane();
+        layout.getChildren().add(new Label(text));
+
+        Scene scene = new Scene(layout, 600, 700, Paint.valueOf("Red"));
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     public void tellUserAboutTheGame(){
@@ -156,16 +182,14 @@ public class MyViewController implements Observer, IView {
 
 
         Stage stage = new Stage();
-        stage.setTitle("About TheGame");
+        stage.setTitle("About The Game");
         AnchorPane layout = new AnchorPane();
         layout.getChildren().add(new Label(text));
 
-        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        Scene scene = new Scene(layout, 500, 400, Paint.valueOf("Red"));
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-
-        //let us tell you abit about ourselves :/
     }
 
     public void rickrolledUser() {
@@ -235,6 +259,20 @@ public class MyViewController implements Observer, IView {
         Button play = new Button("Create");
         grid.setConstraints(play,1,3);
         play.setOnAction(event -> {vm.generateMaze(); stage.close();
+        });
+
+        rows.setOnKeyPressed(event -> {
+            if (event.getCode()==KeyCode.ENTER){
+                vm.generateMaze();
+                stage.close();
+            }
+        });
+
+        cols.setOnKeyPressed(event -> {
+            if (event.getCode()==KeyCode.ENTER){
+                vm.generateMaze();
+                stage.close();
+            }
         });
 
         grid.getChildren().addAll(rowLabel,rows,colLabel,cols,play,instructionLabel);
@@ -319,6 +357,7 @@ public class MyViewController implements Observer, IView {
 
     private void startGame() {
         Stage stage = new Stage();
+        stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
         vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
