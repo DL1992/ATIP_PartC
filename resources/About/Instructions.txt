@@ -1,0 +1,29 @@
+The Goal: you must find your way through the maze 
+and reach the people in need.
+you can switch the goal at any time by 
+pressing the rightmost comboBox or the edit window.
+
+How to play : you can move your hero by pressing the >,<,v,^ 
+on the keyboard or the game screen itself.
+You can't go through walls.
+
+Switching heroes: you can switch youre hero(and background music)
+at any time by pressing the leftmost comboBox or the edit window.
+
+Switching walls: you can switch the walls
+at any time by pressing the middle comboBox or the edit window.
+
+Saving the game: you can save your current maze to play later 
+by prssing the save maze button or using the file menu.
+
+Loading a game: you can load a maze you have played before by
+pressing the load button on the opening or game 
+screen or using the file menu.
+
+Show path: having trouble solving a maze? you can highlight
+the path by pressing the "Highlight path" button or using
+help menu.
+
+Controlling the music: the background music change according to your hero,
+you can control its volume by moving the slider in the right of the screen.
+
