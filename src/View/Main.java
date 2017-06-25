@@ -55,6 +55,17 @@ public class Main extends Application {
         myOpeningViewController.openingScene = openingScene;
 
 
+        openingScene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                myOpeningViewController.UpdateLayout();
+            }
+        });
+        openingScene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                myOpeningViewController.UpdateLayout();
+            }
+        });
+
         gameScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
                 myViewController.UpdateLayout();
@@ -66,14 +77,28 @@ public class Main extends Application {
             }
         });
 
+        victoryScene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                myVictoryViewController.UpdateLayout();
+            }
+        });
+        victoryScene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                myVictoryViewController.UpdateLayout();
+            }
+        });
+
+
 
 
         vm.playMusic("./resources/Audio/Superman.mp3");
 //        vm.mediaPlayer.setVolume(50);
         myViewController.setVolume(50);
         primaryStage.setScene(openingScene);
+        myOpeningViewController.bindStuff();
+        myOpeningViewController.UpdateLayout();
         primaryStage.show();
-        //myViewController.UpdateLayout();
+        myOpeningViewController.UpdateLayout();
     }
 
 

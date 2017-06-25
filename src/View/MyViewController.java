@@ -13,10 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -41,14 +38,28 @@ public class MyViewController implements Observer, IView {
 
 
     @FXML
-    public HBox selectionPane;
     public BorderPane borderPane;
+    public MenuBar menuBar;
+    public AnchorPane MazeAnchor;
+    public HBox SelectionHBox;
+    public VBox rightSideMainVBox;
     public MazeDisplay mazeDisplay;
     public ComboBox HeroBox;
     public ComboBox WallBox;
     public ComboBox GoalBox;
-    public Button backToTheMain;
-    public Slider slide;
+    public VBox rightSideButtonsVBox;
+    public Button backToOpeningButton;
+    public Button saveMazeButton;
+    public Button loadMazeButton;
+    public Button solveMazeButton;
+    public GridPane movementGridPane;
+    public Button upButton;
+    public Button leftButton;
+    public Button downButton;
+    public Button rightButton;
+    public HBox volumeHBox;
+    public Label volumeLabel;
+    public Slider volumeSlider;
 
     public void setViewModel(MyViewModel vm){
         this.vm = vm;
@@ -64,14 +75,14 @@ public class MyViewController implements Observer, IView {
         alert.setOnCloseRequest(event -> createMaze());
     }
 
-    public void generateMaze(){ vm.fromMainToOpen(); }
+    public void backToOpening(){ vm.fromMainToOpen(); }
 
     public void solveMaze(){ vm.solveMaze(); }
 
     public void updateHero(){
         String ThePathToTheHeroImage = "./resources/character/" +(String) HeroBox.getValue() + ".png";
         vm.playMusic("./resources/Audio/" + (String) HeroBox.getValue() + ".mp3");
-        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
         mazeDisplay.setHeroImageFileName(ThePathToTheHeroImage);
     }
 
@@ -350,9 +361,61 @@ public class MyViewController implements Observer, IView {
         Stage stage = new Stage();
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
-        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
+        bindStuff();
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
         stage.show();
         load();
+    }
+
+    /**
+     * binds all of the controllers to the "right" size
+     */
+    private void bindStuff() {
+        borderPane.prefHeightProperty().bind(mainScene.heightProperty());
+        borderPane.prefWidthProperty().bind(mainScene.widthProperty());
+        menuBar.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.03));
+        menuBar.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(1));
+        MazeAnchor.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.7));
+        MazeAnchor.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(0.7));
+        mazeDisplay.heightProperty().bind(MazeAnchor.prefHeightProperty().multiply(1));
+        mazeDisplay.widthProperty().bind(MazeAnchor.prefWidthProperty().multiply(1));
+        SelectionHBox.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.2));
+        SelectionHBox.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(1));
+        HeroBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        HeroBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
+        WallBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        WallBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
+        GoalBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        GoalBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
+        rightSideMainVBox.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.7));
+        rightSideMainVBox.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(0.27));
+        rightSideButtonsVBox.prefHeightProperty().bind(rightSideMainVBox.prefHeightProperty().multiply(0.5));
+        rightSideButtonsVBox.prefWidthProperty().bind(rightSideMainVBox.prefWidthProperty().multiply(1));
+        backToOpeningButton.prefHeightProperty().bind(rightSideButtonsVBox.prefHeightProperty().multiply(0.2));
+        backToOpeningButton.prefWidthProperty().bind(rightSideButtonsVBox.prefWidthProperty().multiply(0.9));
+        saveMazeButton.prefHeightProperty().bind(rightSideButtonsVBox.prefHeightProperty().multiply(0.2));
+        saveMazeButton.prefWidthProperty().bind(rightSideButtonsVBox.prefWidthProperty().multiply(0.9));
+        loadMazeButton.prefHeightProperty().bind(rightSideButtonsVBox.prefHeightProperty().multiply(0.2));
+        loadMazeButton.prefWidthProperty().bind(rightSideButtonsVBox.prefWidthProperty().multiply(0.9));
+        solveMazeButton.prefHeightProperty().bind(rightSideButtonsVBox.prefHeightProperty().multiply(0.2));
+        solveMazeButton.prefWidthProperty().bind(rightSideButtonsVBox.prefWidthProperty().multiply(0.9));
+        movementGridPane.prefHeightProperty().bind(rightSideMainVBox.prefHeightProperty().multiply(0.4));
+        movementGridPane.prefWidthProperty().bind(rightSideMainVBox.prefWidthProperty().multiply(1));
+        upButton.prefHeightProperty().bind(movementGridPane.prefHeightProperty().multiply(0.33));
+        upButton.prefWidthProperty().bind(movementGridPane.prefWidthProperty().multiply(0.33));
+        leftButton.prefHeightProperty().bind(movementGridPane.prefHeightProperty().multiply(0.33));
+        leftButton.prefWidthProperty().bind(movementGridPane.prefWidthProperty().multiply(0.33));
+        downButton.prefHeightProperty().bind(movementGridPane.prefHeightProperty().multiply(0.33));
+        downButton.prefWidthProperty().bind(movementGridPane.prefWidthProperty().multiply(0.33));
+        rightButton.prefHeightProperty().bind(movementGridPane.prefHeightProperty().multiply(0.33));
+        rightButton.prefWidthProperty().bind(movementGridPane.prefWidthProperty().multiply(0.33));
+        volumeHBox.prefHeightProperty().bind(rightSideMainVBox.prefHeightProperty().multiply(0.2));
+        volumeHBox.prefWidthProperty().bind(rightSideMainVBox.prefWidthProperty().multiply(1));
+        volumeLabel.prefHeightProperty().bind(volumeHBox.prefHeightProperty().multiply(1));
+        volumeLabel.prefWidthProperty().bind(volumeHBox.prefWidthProperty().multiply(0.33));
+        volumeSlider.prefHeightProperty().bind(volumeHBox.prefHeightProperty().multiply(1));
+        volumeSlider.prefWidthProperty().bind(volumeHBox.prefWidthProperty().multiply(0.66));
+
     }
 
     private void startGame() {
@@ -360,7 +423,8 @@ public class MyViewController implements Observer, IView {
         stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(mainScene);
-        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
+        bindStuff();
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
         stage.show();
         createMaze();
     }
@@ -375,69 +439,11 @@ public class MyViewController implements Observer, IView {
     }
 
     public void UpdateLayout() {
-        updateBottom();
-        updateComboBoxes();
-        updateMazeDisplay();
-    }
-
-    private void updateMazeDisplay() {
-        mazeDisplay.setHeight(borderPane.getHeight() * 0.7);
-        mazeDisplay.setWidth(borderPane.getWidth() * 0.7);
         mazeDisplay.redraw();
     }
 
-    private void updateBottom() {
-        selectionPane.setMinHeight( borderPane.getHeight() * 0.2 );
-        selectionPane.setMaxHeight( borderPane.getHeight() * 0.2 );
-        selectionPane.setPrefHeight( borderPane.getHeight() * 0.2 );
-        selectionPane.setMinWidth( borderPane.getWidth());
-        selectionPane.setMaxWidth( borderPane.getWidth());
-        selectionPane.setPrefWidth( borderPane.getWidth());
-        selectionPane.setSpacing(borderPane.getWidth() * 0.05);
-    }
-
-    private void updateComboBoxes() {
-        updateHeroBox();
-        updateGoalBox();
-        updateWallBox();
-    }
-
-    private void updateHeroBox() {
-        HeroBox.setMinHeight( selectionPane.getHeight() * 0.3 );
-        HeroBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
-        HeroBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
-        HeroBox.setMinWidth( selectionPane.getWidth() * 0.2 );
-        HeroBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
-        HeroBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
-    }
-
-    private void updateGoalBox() {
-        GoalBox.setMinHeight( selectionPane.getHeight() * 0.3 );
-        GoalBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
-        GoalBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
-        GoalBox.setMinWidth( selectionPane.getWidth() * 0.2 );
-        GoalBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
-        GoalBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
-    }
-
-    private void updateWallBox() {
-        WallBox.setMinHeight( selectionPane.getHeight() * 0.3 );
-        WallBox.setMaxHeight( selectionPane.getHeight() * 0.3 );
-        WallBox.setPrefHeight( selectionPane.getHeight() * 0.3 );
-        WallBox.setMinWidth( selectionPane.getWidth() * 0.2 );
-        WallBox.setMaxWidth( selectionPane.getWidth() * 0.2 );
-        WallBox.setPrefWidth( selectionPane.getWidth() * 0.2 );
-    }
-
     public void setVolume(int value){
-        vm.mediaPlayer.volumeProperty().bindBidirectional(slide.valueProperty());
-        slide.setValue(value);
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        volumeSlider.setValue(value);
     }
-
-    public void zoomIn(){
-        mazeDisplay.setScaleX(mazeDisplay.getScaleX()*2);
-        mazeDisplay.setScaleY(mazeDisplay.getScaleY()*2);
-        mazeDisplay.setScaleZ(mazeDisplay.getScaleZ()*2);
-    }
-
 }

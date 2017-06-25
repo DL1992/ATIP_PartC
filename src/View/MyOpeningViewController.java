@@ -1,7 +1,13 @@
 package View;
 
 import ViewModel.MyViewModel;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -14,13 +20,20 @@ public class MyOpeningViewController implements IView, Observer {
     private MyViewModel vm;
     public Scene openingScene;
 
+    @FXML
+    public BorderPane mainBorderPane;
+    public AnchorPane pictureAnchorPane;
+    public VBox mainVBox;
+    public Button startGameButton;
+    public Button loadGameButton;
+
     public void setViewModel(MyViewModel vm){
         this.vm = vm;
     }
 
     @Override
     public void UpdateLayout() {
-
+        bindStuff();
     }
 
     @Override
@@ -56,6 +69,25 @@ public class MyOpeningViewController implements IView, Observer {
         vm.playMusic("./resources/Audio/Superman.mp3");
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(openingScene);
+        bindStuff();
         stage.show();
+    }
+
+    public void bindStuff() {
+        mainBorderPane.prefHeightProperty().bind(openingScene.heightProperty());
+        mainBorderPane.prefWidthProperty().bind(openingScene.widthProperty());
+        pictureAnchorPane.prefHeightProperty().bind(mainBorderPane.prefHeightProperty().multiply(0.6));
+        pictureAnchorPane.prefWidthProperty().bind(mainBorderPane.prefWidthProperty().multiply(1));
+        mainVBox.prefHeightProperty().bind(mainBorderPane.prefHeightProperty().multiply(0.4));
+        mainVBox.prefWidthProperty().bind(mainBorderPane.prefWidthProperty().multiply(1));
+        startGameButton.prefHeightProperty().bind(mainVBox.prefHeightProperty().multiply(0.15));
+        startGameButton.prefWidthProperty().bind(mainVBox.prefWidthProperty().multiply(0.3));
+        loadGameButton.prefHeightProperty().bind(mainVBox.prefHeightProperty().multiply(0.15));
+        loadGameButton.prefWidthProperty().bind(mainVBox.prefWidthProperty().multiply(0.3));
+        Image image = new Image("BackGround/Heroes.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(pictureAnchorPane.getWidth(), pictureAnchorPane.getHeight(), false, false, false, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        pictureAnchorPane.setBackground(background);
     }
 }
