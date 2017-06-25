@@ -30,8 +30,7 @@ import java.util.Observer;
 import java.util.Scanner;
 
 /**
- * This class is the Interface for the View layer fxml controller - as part of the MVVM architecture.
- * contains basic functions such as setting the observed View-Model and updating the layout.
+ * This class is the Controller for the Main game scene as part of the view in the MVVM architecture
  *
  * @author Vladislav Sergienko
  * @author Doron Laadan
@@ -346,7 +345,7 @@ public class MyViewController implements Observer, IView {
     }
 
     /**
-     * this function is called when someone clicks on the "Move Up" button
+     * this function is called when someone clicks on the "Help - Properties" button
      * it opens a new window with a text about the properties
      *
      */
