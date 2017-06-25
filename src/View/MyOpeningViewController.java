@@ -12,7 +12,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by sergayen on 6/20/2017.
+ * This class is the Interface for the View layer fxml controller - as part of the MVVM architecture.
+ * contains basic functions such as setting the observed View-Model and updating the layout.
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class MyOpeningViewController implements IView, Observer {
     private MyViewModel vm;
@@ -25,6 +29,8 @@ public class MyOpeningViewController implements IView, Observer {
     public Button startGameButton;
     public Button loadGameButton;
 
+
+    @Override
     public void setViewModel(MyViewModel vm) {
         this.vm = vm;
     }
@@ -53,14 +59,28 @@ public class MyOpeningViewController implements IView, Observer {
         }
     }
 
+    /**
+     * this function is called when someone clicks on the "Start Game" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void startGame() {
         vm.startGame();
     }
 
+    /**
+     * this function is called when someone clicks on the "Load Game" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void loadGame() {
         vm.loadGame();
     }
 
+    /**
+     * this function opens a new stage and shows the Opening Scene
+     *
+     */
     private void showOpeningView() {
         Stage stage = new Stage();
         stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
@@ -71,6 +91,10 @@ public class MyOpeningViewController implements IView, Observer {
         bindStuff();
     }
 
+    /**
+     * this function is a helper function for UpdateLayout it binds the Opening View controls to the right proportions
+     *
+     */
     public void bindStuff() {
         mainBorderPane.prefHeightProperty().bind(openingScene.heightProperty());
         mainBorderPane.prefWidthProperty().bind(openingScene.widthProperty());

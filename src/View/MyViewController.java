@@ -30,7 +30,11 @@ import java.util.Observer;
 import java.util.Scanner;
 
 /**
- * Created by sergayen on 6/14/2017.
+ * This class is the Interface for the View layer fxml controller - as part of the MVVM architecture.
+ * contains basic functions such as setting the observed View-Model and updating the layout.
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class MyViewController implements Observer, IView {
     private MyViewModel vm;
@@ -63,6 +67,7 @@ public class MyViewController implements Observer, IView {
     public Label volumeLabel;
     public Slider volumeSlider;
 
+    @Override
     public void setViewModel(MyViewModel vm) {
         this.vm = vm;
         vm.rows.bind(rows.textProperty());
@@ -70,55 +75,65 @@ public class MyViewController implements Observer, IView {
         mazeDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> mazeDisplay.requestFocus());
     }
 
-    private void showAlert(String alertMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(alertMessage);
-        alert.show();
-        alert.setOnCloseRequest(event -> createMaze());
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o == vm) {
+            if (arg instanceof Maze) {
+                mazeDisplay.setMaze((Maze) arg);
+            }
+            if (arg instanceof Position) {
+                mazeDisplay.setHeroPosition((Position) arg);
+            }
+            if (arg instanceof Solution) {
+                mazeDisplay.drawSolution((Solution) arg);
+            }
+            if (arg instanceof String) {
+                if (((String) arg).equals("GameOver")) {
+                    showWin();
+                }
+                if (((String) arg).equals("BadSizes")) {
+                    showAlert("Please enter only natural numbers bigger then 1 as maze sizes :/ ");
+                }
+                if (((String) arg).equals("NotInt")) {
+                    showAlert("Please only numbers as maze sizes :/ ");
+                }
+                if (((String) arg).equals("StartGame")) {
+                    startGame();
+                }
+                if (((String) arg).equals("LoadGame")) {
+                    loadGame();
+                }
+                if (((String) arg).equals("mainToOpen")) {
+                    ((Stage) mainScene.getWindow()).close();
+                }
+                if (((String) arg).equals("ShutDown")) {
+                    if ((Stage) mainScene.getWindow() != null) {
+                        ((Stage) mainScene.getWindow()).close();
+                    }
+                }
+            }
+        }
     }
 
+    @Override
+    public void UpdateLayout() {
+        mazeDisplay.redraw();
+    }
+
+    /**
+     * this function is called when someone clicks on the "Try Another Maze" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void backToOpening() {
         vm.fromMainToOpen();
     }
 
-    public void solveMaze() {
-        vm.solveMaze();
-    }
-
-    public void updateHero() {
-        String ThePathToTheHeroImage = "./resources/character/" + (String) HeroBox.getValue() + ".png";
-        vm.playMusic("./resources/Audio/" + (String) HeroBox.getValue() + ".mp3");
-        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        mazeDisplay.setHeroImageFileName(ThePathToTheHeroImage);
-    }
-
-    public void updateWalls() {
-        String ThePathToTheWallImage;
-        if (WallBox.getValue().equals("FireWall")) {
-            ThePathToTheWallImage = "./resources/Walls/" + (String) WallBox.getValue() + ".png";
-        } else {
-            ThePathToTheWallImage = "./resources/Walls/" + (String) WallBox.getValue() + ".jpg";
-        }
-        mazeDisplay.setWallImageFileName(ThePathToTheWallImage);
-    }
-
-    public void updateGoal() {
-        String ThePathToTheGoalImage = "./resources/Goal/" + (String) GoalBox.getValue() + ".png";
-        mazeDisplay.setGoalImageFileName(ThePathToTheGoalImage);
-    }
-
-    public void editUpdateHero(ActionEvent evt) {
-        HeroBox.setValue(((MenuItem) evt.getSource()).getText());
-    }
-
-    public void editUpdateWalls(ActionEvent evt) {
-        WallBox.setValue(((MenuItem) evt.getSource()).getText());
-    }
-
-    public void editUpdateGoal(ActionEvent evt) {
-        GoalBox.setValue(((MenuItem) evt.getSource()).getText());
-    }
-
+    /**
+     * this function is called when someone clicks on the "Save Maze" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void save() {
         FileChooser saveFileChooser = new FileChooser();
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TXT files (*.txt))", "*.txt");
@@ -130,6 +145,11 @@ public class MyViewController implements Observer, IView {
         }
     }
 
+    /**
+     * this function is called when someone clicks on the "Load Maze" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void load() {
         FileChooser loadFileChooser = new FileChooser();
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TXT files (*.txt))", "*.txt");
@@ -141,7 +161,86 @@ public class MyViewController implements Observer, IView {
         }
     }
 
+    /**
+     * this function is called when someone clicks on the "Highlight Path" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
+    public void solveMaze() {
+        vm.solveMaze();
+    }
 
+    /**
+     * this function is called when someone changes the hero image.
+     * it sends the signal to the vm to change the music.
+     * it also updates the hero image
+     *
+     */
+    public void updateHero() {
+        String ThePathToTheHeroImage = "./resources/character/" + (String) HeroBox.getValue() + ".png";
+        vm.playMusic("./resources/Audio/" + (String) HeroBox.getValue() + ".mp3");
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        mazeDisplay.setHeroImageFileName(ThePathToTheHeroImage);
+    }
+
+    /**
+     * this function is called when someone changes the wall image.
+     * it also updates the wall image
+     *
+     */
+    public void updateWalls() {
+        String ThePathToTheWallImage;
+        if (WallBox.getValue().equals("FireWall")) {
+            ThePathToTheWallImage = "./resources/Walls/" + (String) WallBox.getValue() + ".png";
+        } else {
+            ThePathToTheWallImage = "./resources/Walls/" + (String) WallBox.getValue() + ".jpg";
+        }
+        mazeDisplay.setWallImageFileName(ThePathToTheWallImage);
+    }
+
+    /**
+     * this function is called when someone changes the goal image.
+     * it also updates the Goal image
+     *
+     */
+    public void updateGoal() {
+        String ThePathToTheGoalImage = "./resources/Goal/" + (String) GoalBox.getValue() + ".png";
+        mazeDisplay.setGoalImageFileName(ThePathToTheGoalImage);
+    }
+
+    /**
+     * this function is called when someone changes the hero image.
+     * it sends the signal to the vm to change the music.
+     * it also updates the hero image
+     *
+     */
+    public void editUpdateHero(ActionEvent evt) {
+        HeroBox.setValue(((MenuItem) evt.getSource()).getText());
+    }
+
+    /**
+     * this function is called when someone changes the wall image.
+     * it also updates the wall image
+     *
+     */
+    public void editUpdateWalls(ActionEvent evt) {
+        WallBox.setValue(((MenuItem) evt.getSource()).getText());
+    }
+
+    /**
+     * this function is called when someone changes the goal image.
+     * it also updates the Goal image
+     *
+     */
+    public void editUpdateGoal(ActionEvent evt) {
+        GoalBox.setValue(((MenuItem) evt.getSource()).getText());
+    }
+
+    /**
+     * this function is called when someone clicks on the "About - Us" button
+     * it opens a new window with a text about the creators of this program
+     *
+     */
     public void tellUserAboutDevs() {
         String text = "";
         try {
@@ -167,6 +266,11 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
+    /**
+     * this function is called when someone clicks on the "Help - Instructions" button
+     * it opens a new window with a text about the Instructions for this game
+     *
+     */
     public void showInstructions() {
         String text = "";
         try {
@@ -192,6 +296,11 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
+    /**
+     * this function is called when someone clicks on the "About - The Game" button
+     * it opens a new window with a text about this game
+     *
+     */
     public void tellUserAboutTheGame() {
         String text = "";
         try {
@@ -217,6 +326,11 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
+    /**
+     * this function is called when someone clicks on the "About - Hidden Knowledge" button
+     * it opens a new window with a rickroll
+     *
+     */
     public void rickrolledUser() {
 
         Stage stage = new Stage();
@@ -231,6 +345,11 @@ public class MyViewController implements Observer, IView {
 
     }
 
+    /**
+     * this function is called when someone clicks on the "Move Up" button
+     * it opens a new window with a text about the properties
+     *
+     */
     public void showProperties() {
         String text = String.format("Maze creation algorithm: %s \n" +
                         "Maze solving algorithm: %s \n" +
@@ -252,7 +371,11 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
-
+    /**
+     * this function is called when someone clicks on the "Create Maze" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void createMaze() {
         Stage stage = new Stage();
         stage.setOnCloseRequest(event -> {
@@ -311,78 +434,54 @@ public class MyViewController implements Observer, IView {
         stage.show();
     }
 
+    /**
+     * this function is called when someone clicks on the "Move Up" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void MoveUp() {
         vm.moveHero(KeyCode.UP);
     }
 
+    /**
+     * this function is called when someone clicks on the "Move Left" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void MoveLeft() {
         vm.moveHero(KeyCode.LEFT);
     }
 
+    /**
+     * this function is called when someone clicks on the "Move Down" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void MoveDown() {
         vm.moveHero(KeyCode.DOWN);
     }
 
+    /**
+     * this function is called when someone clicks on the "Move Right" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void MoveRight() {
         vm.moveHero(KeyCode.RIGHT);
     }
 
+    /**
+     * this function is called when someone presses a key - it sends it to the View Model
+     */
     public void KeyPressed(KeyEvent keyEvent) {
         vm.moveHero(keyEvent.getCode());
         keyEvent.consume();
     }
 
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o == vm) {
-            if (arg instanceof Maze) {
-                mazeDisplay.setMaze((Maze) arg);
-            }
-            if (arg instanceof Position) {
-                mazeDisplay.setHeroPosition((Position) arg);
-            }
-            if (arg instanceof Solution) {
-                mazeDisplay.drawSolution((Solution) arg);
-            }
-            if (arg instanceof String) {
-                if (((String) arg).equals("GameOver")) {
-                    showWin();
-                }
-                if (((String) arg).equals("BadSizes")) {
-                    showAlert("Please enter only natural numbers bigger then 1 as maze sizes :/ ");
-                }
-                if (((String) arg).equals("NotInt")) {
-                    showAlert("Please only numbers as maze sizes :/ ");
-                }
-                if (((String) arg).equals("StartGame")) {
-                    startGame();
-                }
-                if (((String) arg).equals("LoadGame")) {
-                    loadGame();
-                }
-                if (((String) arg).equals("mainToOpen")) {
-                    ((Stage) mainScene.getWindow()).close();
-                }
-                if (((String) arg).equals("ShutDown")) {
-                    if ((Stage) mainScene.getWindow() != null) {
-                        ((Stage) mainScene.getWindow()).close();
-                    }
-                }
-            }
-        }
-    }
-
-    private void loadGame() {
-        Stage stage = new Stage();
-        stage.setOnCloseRequest(event -> vm.closeProgram());
-        stage.setScene(mainScene);
-        bindStuff();
-        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        stage.show();
-        load();
-    }
-
+    /**
+     * this function creates this scene from a new maze
+     *
+     */
     private void startGame() {
         Stage stage = new Stage();
         stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
@@ -394,26 +493,62 @@ public class MyViewController implements Observer, IView {
         createMaze();
     }
 
-    public void closeProgram() {
-        vm.closeProgram();
+    /**
+     * this function creates this scene from a loaded maze
+     *
+     */
+    private void loadGame() {
+        Stage stage = new Stage();
+        stage.setOnCloseRequest(event -> vm.closeProgram());
+        stage.setScene(mainScene);
+        bindStuff();
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        stage.show();
+        load();
     }
 
+    /**
+     * closes this window to allow the victory scene to show
+     */
     private void showWin() {
         mazeDisplay.clear();
         ((Stage) mainScene.getWindow()).close();
     }
 
+    /**
+     * this function sets the volume of the music to a given Value
+     *
+     * @param value is the new music volume value
+     */
     public void setVolume(int value) {
         vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
         volumeSlider.setValue(value);
     }
 
-    public void UpdateLayout() {
-        mazeDisplay.redraw();
+    /**
+     * this function is called when someone clicks on the "Exit" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
+    public void closeProgram() {
+        vm.closeProgram();
     }
 
     /**
-     * binds all of the controllers to the "right" size
+     * this function is called when someone enters invalid maze creation indexes
+     * it opens an alert box with an appropriate text.
+     *
+     */
+    private void showAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(alertMessage);
+        alert.show();
+        alert.setOnCloseRequest(event -> createMaze());
+    }
+
+    /**
+     * this function is a helper function for UpdateLayout it binds the Opening View controls to the right proportions
+     *
      */
     private void bindStuff() {
         borderPane.prefHeightProperty().bind(mainScene.heightProperty());

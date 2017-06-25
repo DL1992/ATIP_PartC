@@ -41,19 +41,13 @@ public class Main extends Application {
 
         primaryStage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
 
-        Scene gameScene = new Scene(root, 875, 750, Color.web("CAEBF2"));
-        gameScene.getStylesheets().add("./View/Design.css");
-
-        Scene victoryScene = new Scene(root2, 875, 750, Color.web("CAEBF2"));
-        victoryScene.getStylesheets().add("./View/Design.css");
-
-        Scene openingScene = new Scene(root3, 875, 750, Color.web("CAEBF2"));
-        openingScene.getStylesheets().add("./View/Design.css");
+        Scene gameScene = getScene(root);
+        Scene victoryScene = getScene(root2);
+        Scene openingScene = getScene(root3);
 
         myViewController.mainScene = gameScene;
         myVictoryViewController.victoryScene = victoryScene;
         myOpeningViewController.openingScene = openingScene;
-
 
         openingScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -67,7 +61,6 @@ public class Main extends Application {
                 myOpeningViewController.UpdateLayout();
             }
         });
-
         gameScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
@@ -80,7 +73,6 @@ public class Main extends Application {
                 myViewController.UpdateLayout();
             }
         });
-
         victoryScene.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
@@ -94,13 +86,19 @@ public class Main extends Application {
             }
         });
 
-
         vm.playMusic("./resources/Audio/Superman.mp3");
         myViewController.setVolume(50);
         primaryStage.setScene(openingScene);
         primaryStage.setOnCloseRequest(event -> vm.closeProgram());
+        myOpeningViewController.UpdateLayout();
         primaryStage.show();
         myOpeningViewController.UpdateLayout();
+    }
+
+    private Scene getScene(Parent root) {
+        Scene scene = new Scene(root, 875, 750, Color.web("CAEBF2"));
+        scene.getStylesheets().add("./View/Design.css");
+        return scene;
     }
 
 

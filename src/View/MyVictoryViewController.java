@@ -12,7 +12,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by sergayen on 6/20/2017.
+ * This class is the Interface for the View layer fxml controller - as part of the MVVM architecture.
+ * contains basic functions such as setting the observed View-Model and updating the layout.
+ *
+ * @author Vladislav Sergienko
+ * @author Doron Laadan
  */
 public class MyVictoryViewController implements Observer, IView {
     private MyViewModel vm;
@@ -24,6 +28,7 @@ public class MyVictoryViewController implements Observer, IView {
     public HBox mainHBox;
     public Button backToTheMain;
 
+    @Override
     public void setViewModel(MyViewModel vm) {
         this.vm = vm;
     }
@@ -46,7 +51,7 @@ public class MyVictoryViewController implements Observer, IView {
                     weWon();
                 }
                 if (((String) arg).equals("Continue")) {
-                    moveOn();
+                    ((Stage) victoryScene.getWindow()).close();
                 }
                 if (((String) arg).equals("ShutDown")) {
                     if ((Stage) victoryScene.getWindow() != null) {
@@ -57,14 +62,20 @@ public class MyVictoryViewController implements Observer, IView {
         }
     }
 
+    /**
+     * this function is called when someone clicks on the "Continue" button
+     * it sends the signal to the vm and lets it decide what to do.
+     *
+     */
     public void resumeGame() {
         vm.resumeGame();
     }
 
-    private void moveOn() {
-        ((Stage) victoryScene.getWindow()).close();
-    }
 
+    /**
+     * this function opens a new stage and shows the Victory Scene
+     *
+     */
     private void weWon() {
         Stage stage = new Stage();
         stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
@@ -76,7 +87,8 @@ public class MyVictoryViewController implements Observer, IView {
     }
 
     /**
-     * binds all of the controllers to the "right" size
+     * this function is a helper function for UpdateLayout it binds the Opening View controls to the right proportions
+     *
      */
     private void bindStuff() {
         mainBorderPane.prefHeightProperty().bind(victoryScene.heightProperty());
