@@ -2,27 +2,19 @@ package View;
 
 import ViewModel.MyViewModel;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * Created by sergayen on 6/20/2017.
  */
-public class MyVictoryViewController implements Observer, IView{
+public class MyVictoryViewController implements Observer, IView {
     private MyViewModel vm;
     public Scene victoryScene;
 
@@ -32,7 +24,7 @@ public class MyVictoryViewController implements Observer, IView{
     public HBox mainHBox;
     public Button backToTheMain;
 
-    public void setViewModel(MyViewModel vm){
+    public void setViewModel(MyViewModel vm) {
         this.vm = vm;
     }
 
@@ -52,16 +44,16 @@ public class MyVictoryViewController implements Observer, IView{
 
     @Override
     public void update(Observable o, Object arg) {
-        if(o == vm) {
-            if(arg instanceof String) {
+        if (o == vm) {
+            if (arg instanceof String) {
                 if (((String) arg).equals("GameOver")) {
                     weWon();
                 }
                 if (((String) arg).equals("Continue")) {
                     moveOn();
                 }
-                if( ((String) arg).equals("ShutDown")) {
-                    if((Stage) victoryScene.getWindow() != null){
+                if (((String) arg).equals("ShutDown")) {
+                    if ((Stage) victoryScene.getWindow() != null) {
                         ((Stage) victoryScene.getWindow()).close();
                     }
                 }
@@ -69,7 +61,7 @@ public class MyVictoryViewController implements Observer, IView{
         }
     }
 
-    public void resumeGame(){
+    public void resumeGame() {
         vm.resumeGame();
     }
 

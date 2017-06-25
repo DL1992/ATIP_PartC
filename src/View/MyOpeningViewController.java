@@ -6,8 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -27,7 +25,7 @@ public class MyOpeningViewController implements IView, Observer {
     public Button startGameButton;
     public Button loadGameButton;
 
-    public void setViewModel(MyViewModel vm){
+    public void setViewModel(MyViewModel vm) {
         this.vm = vm;
     }
 
@@ -38,16 +36,16 @@ public class MyOpeningViewController implements IView, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(o == vm) {
-            if(arg instanceof String) {
+        if (o == vm) {
+            if (arg instanceof String) {
                 if (((String) arg).equals("Continue") || ((String) arg).equals("mainToOpen")) {
                     showOpeningView();
                 }
                 if (((String) arg).equals("StartGame") || ((String) arg).equals("LoadGame")) {
                     ((Stage) openingScene.getWindow()).close();
                 }
-                if( ((String) arg).equals("ShutDown")) {
-                    if((Stage) openingScene.getWindow() != null){
+                if (((String) arg).equals("ShutDown")) {
+                    if ((Stage) openingScene.getWindow() != null) {
                         ((Stage) openingScene.getWindow()).close();
                     }
                 }
@@ -55,11 +53,11 @@ public class MyOpeningViewController implements IView, Observer {
         }
     }
 
-    public void startGame(){
+    public void startGame() {
         vm.startGame();
     }
 
-    public void loadGame(){
+    public void loadGame() {
         vm.loadGame();
     }
 
