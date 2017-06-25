@@ -75,7 +75,7 @@ public class MyModel extends Observable implements IModel {
 
     @Override
     /**
-     * to create the maze e used a a maze generation server nad a client strategy which save the generated maze
+     * to create the maze we used a maze generation server and a client strategy which save the generated maze
      * and the hero position to the proper field in the model.
      * it notify the observers that a maze benn created.
      */
@@ -116,6 +116,11 @@ public class MyModel extends Observable implements IModel {
     }
 
     @Override
+    /**
+     * to solve the maze we used a maze solving server and a client strategy which save solution
+     * to the proper field in the model.
+     * it notify the observers that a solution benn created.
+     */
     public void Solve() {
         threadPool.execute(() -> {
             try {

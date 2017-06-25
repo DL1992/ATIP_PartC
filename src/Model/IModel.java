@@ -56,6 +56,7 @@ public interface IModel {
      * move around the maze. this function should decide if a specific move is legal or not.
      * if it is, it should move the character to the right place, change the character position
      * and notify the observers of the model that the character has benn moved.
+     * if the Character got to the goal position the function should notify to end the game.
      *
      * @param moveCode the code of the key that was preesed by the user in order to move the character
      *                 in a specific direction.
