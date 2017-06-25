@@ -8,6 +8,7 @@ import algorithms.search.Solution;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -15,6 +16,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -227,9 +230,12 @@ public class MyViewController implements Observer, IView {
         Stage stage = new Stage();
         stage.setTitle("The Properties");
         AnchorPane layout = new AnchorPane();
-        layout.getChildren().add(new Label(text));
+        Label textLabel = new Label(text);
+        textLabel.setAlignment(Pos.CENTER);
+        textLabel.setFont(Font.font("Segoi", 15));
+        layout.getChildren().add(textLabel);
 
-        Scene scene = new Scene(layout, 400, 300, Paint.valueOf("Red"));
+        Scene scene = new Scene(layout, 300, 75, Paint.valueOf("Red"));
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -367,6 +373,35 @@ public class MyViewController implements Observer, IView {
         load();
     }
 
+    private void startGame() {
+        Stage stage = new Stage();
+        stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
+        stage.setOnCloseRequest(event -> vm.closeProgram());
+        stage.setScene(mainScene);
+        bindStuff();
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        stage.show();
+        createMaze();
+    }
+
+    public void closeProgram(){
+        vm.closeProgram();
+    }
+
+    private void showWin() {
+        mazeDisplay.clear();
+        ((Stage) mainScene.getWindow()).close();
+    }
+
+    public void setVolume(int value){
+        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+        volumeSlider.setValue(value);
+    }
+
+    public void UpdateLayout() {
+        mazeDisplay.redraw();
+    }
+
     /**
      * binds all of the controllers to the "right" size
      */
@@ -381,11 +416,11 @@ public class MyViewController implements Observer, IView {
         mazeDisplay.widthProperty().bind(MazeAnchor.prefWidthProperty().multiply(1));
         SelectionHBox.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.2));
         SelectionHBox.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(1));
-        HeroBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        HeroBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.25));
         HeroBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
-        WallBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        WallBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.25));
         WallBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
-        GoalBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.35));
+        GoalBox.prefHeightProperty().bind(SelectionHBox.prefHeightProperty().multiply(0.25));
         GoalBox.prefWidthProperty().bind(SelectionHBox.prefWidthProperty().multiply(0.17));
         rightSideMainVBox.prefHeightProperty().bind(borderPane.prefHeightProperty().multiply(0.7));
         rightSideMainVBox.prefWidthProperty().bind(borderPane.prefWidthProperty().multiply(0.27));
@@ -416,34 +451,5 @@ public class MyViewController implements Observer, IView {
         volumeSlider.prefHeightProperty().bind(volumeHBox.prefHeightProperty().multiply(1));
         volumeSlider.prefWidthProperty().bind(volumeHBox.prefWidthProperty().multiply(0.66));
 
-    }
-
-    private void startGame() {
-        Stage stage = new Stage();
-        stage.setTitle("Our AMAZING maze game (Show only Version patch 2.0.1)");
-        stage.setOnCloseRequest(event -> vm.closeProgram());
-        stage.setScene(mainScene);
-        bindStuff();
-        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        stage.show();
-        createMaze();
-    }
-
-    public void closeProgram(){
-        vm.closeProgram();
-    }
-
-    private void showWin() {
-        mazeDisplay.clear();
-        ((Stage) mainScene.getWindow()).close();
-    }
-
-    public void UpdateLayout() {
-        mazeDisplay.redraw();
-    }
-
-    public void setVolume(int value){
-        vm.mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-        volumeSlider.setValue(value);
     }
 }
