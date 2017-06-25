@@ -67,7 +67,6 @@ public class MyOpeningViewController implements IView, Observer {
         vm.playMusic("./resources/Audio/Superman.mp3");
         stage.setOnCloseRequest(event -> vm.closeProgram());
         stage.setScene(openingScene);
-        bindStuff();
         stage.show();
         bindStuff();
     }

@@ -71,8 +71,8 @@ public class MyVictoryViewController implements Observer, IView {
         stage.setOnCloseRequest(event -> vm.closeProgram());
         vm.playMusic("./resources/Audio/champions.mp3");
         stage.setScene(victoryScene);
-        bindStuff();
         stage.show();
+        bindStuff();
     }
 
     /**

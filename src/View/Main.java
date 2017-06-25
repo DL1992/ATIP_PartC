@@ -98,8 +98,6 @@ public class Main extends Application {
         vm.playMusic("./resources/Audio/Superman.mp3");
         myViewController.setVolume(50);
         primaryStage.setScene(openingScene);
-        myOpeningViewController.bindStuff();
-        myOpeningViewController.UpdateLayout();
         primaryStage.setOnCloseRequest(event -> vm.closeProgram());
         primaryStage.show();
         myOpeningViewController.UpdateLayout();

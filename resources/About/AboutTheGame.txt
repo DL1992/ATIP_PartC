@@ -12,5 +12,5 @@ to solve the maze and give you the very best and short solution
 we used several different search algorithms - BFS, DFS, Best first search.
 all of which you can read more in the links below.
 
-the whole game supprot the mvvm architecture design. combining 3 layers into
-one glorious game.
+the whole game supprot the mvvm architecture design. combining 3 layers
+into one glorious game.
